@@ -1,4 +1,4 @@
-import { KnowledgeItem, UpdateItem, RiskReport } from '../types';
+import { KnowledgeItem, UpdateItem, RiskReport } from './types';
 
 // In-memory store for demo purposes (would be a DB in production)
 // Seeding with some initial data relevant to Feb 2026

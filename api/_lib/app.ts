@@ -1,6 +1,6 @@
 import express from "express";
 import { GoogleGenAI } from "@google/genai";
-import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from './data/store';
+import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from './store';
 
 export const app = express();
 
