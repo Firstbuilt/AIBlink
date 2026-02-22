@@ -1,37 +1,13 @@
-import express from "express";
-import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
-import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from './src/data/store';
+import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from '../src/data/store';
 
-const app = express();
-const PORT = 3000;
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-
-// Initialize Gemini
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// API Routes
-app.get("/api/knowledge-base", (req, res) => {
-  // Sort by date descending
-  const sorted = [...knowledgeBase].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  res.json(sorted);
-});
+export default async function handler(req: any, res: any) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-app.get("/api/updates", (req, res) => {
-  // Sort by date descending
-  const sorted = [...updates].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  res.json(sorted);
-});
-
-app.get("/api/report", (req, res) => {
-  // Ensure stats are fresh
-  recalculateStats();
-  res.json(riskReport);
-});
-
-app.post("/api/refresh", async (req, res) => {
   try {
     // 1. Search for latest news
     const model = "gemini-2.5-flash"; // Supports grounding
@@ -118,11 +94,9 @@ app.post("/api/refresh", async (req, res) => {
     
     // Update in-memory store
     if (newData.newUpdates && Array.isArray(newData.newUpdates)) {
-      // Prepend new updates
       setUpdates([...newData.newUpdates, ...updates]);
     }
     if (newData.riskReport) {
-      // Preserve stats structure but update content
       const updatedReport = { ...riskReport };
       updatedReport.lastUpdated = newData.riskReport.lastUpdated;
       updatedReport.score = newData.riskReport.score;
@@ -131,7 +105,6 @@ app.post("/api/refresh", async (req, res) => {
       setRiskReport(updatedReport);
     }
 
-    // Update Knowledge Base
     if (newData.updatedKnowledgeBaseItems && Array.isArray(newData.updatedKnowledgeBaseItems)) {
        const updatedKB = [...knowledgeBase];
        newData.updatedKnowledgeBaseItems.forEach((newItem: any) => {
@@ -145,38 +118,12 @@ app.post("/api/refresh", async (req, res) => {
        setKnowledgeBase(updatedKB);
     }
 
-    // Recalculate stats based on new array lengths
     recalculateStats();
 
-    res.json({ success: true, data: newData });
+    res.status(200).json({ success: true, data: newData });
 
   } catch (error) {
     console.error("Refresh failed:", error);
     res.status(500).json({ error: "Failed to refresh data" });
   }
-});
-
-async function startServer() {
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    // Production static file serving would go here
-    app.use(express.static("dist"));
-    
-    // SPA fallback for production
-    app.get("*", (req, res) => {
-      res.sendFile("index.html", { root: "dist" });
-    });
-  }
-
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
 }
-
-startServer();
