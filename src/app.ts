@@ -1,13 +1,36 @@
+import express from "express";
 import { GoogleGenAI } from "@google/genai";
-import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from '../src/data/store';
+import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from './data/store';
 
+export const app = express();
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Initialize Gemini
+// Note: In Vercel, ensure GEMINI_API_KEY is set in the project settings
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-export default async function handler(req: any, res: any) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+// API Routes
+app.get("/api/knowledge-base", (req, res) => {
+  // Sort by date descending
+  const sorted = [...knowledgeBase].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  res.json(sorted);
+});
 
+app.get("/api/updates", (req, res) => {
+  // Sort by date descending
+  const sorted = [...updates].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  res.json(sorted);
+});
+
+app.get("/api/report", (req, res) => {
+  // Ensure stats are fresh
+  recalculateStats();
+  res.json(riskReport);
+});
+
+app.post("/api/refresh", async (req, res) => {
   try {
     // 1. Search for latest news
     const model = "gemini-2.5-flash"; // Supports grounding
@@ -94,9 +117,11 @@ export default async function handler(req: any, res: any) {
     
     // Update in-memory store
     if (newData.newUpdates && Array.isArray(newData.newUpdates)) {
+      // Prepend new updates
       setUpdates([...newData.newUpdates, ...updates]);
     }
     if (newData.riskReport) {
+      // Preserve stats structure but update content
       const updatedReport = { ...riskReport };
       updatedReport.lastUpdated = newData.riskReport.lastUpdated;
       updatedReport.score = newData.riskReport.score;
@@ -105,6 +130,7 @@ export default async function handler(req: any, res: any) {
       setRiskReport(updatedReport);
     }
 
+    // Update Knowledge Base
     if (newData.updatedKnowledgeBaseItems && Array.isArray(newData.updatedKnowledgeBaseItems)) {
        const updatedKB = [...knowledgeBase];
        newData.updatedKnowledgeBaseItems.forEach((newItem: any) => {
@@ -118,12 +144,13 @@ export default async function handler(req: any, res: any) {
        setKnowledgeBase(updatedKB);
     }
 
+    // Recalculate stats based on new array lengths
     recalculateStats();
 
-    res.status(200).json({ success: true, data: newData });
+    res.json({ success: true, data: newData });
 
   } catch (error) {
     console.error("Refresh failed:", error);
     res.status(500).json({ error: "Failed to refresh data" });
   }
-}
+});
