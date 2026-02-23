@@ -6,9 +6,10 @@ import { motion } from 'motion/react';
 
 interface DashboardProps {
   report: RiskReport | null;
+  onNavigate: (tab: string) => void;
 }
 
-export const Dashboard = ({ report }: DashboardProps) => {
+export const Dashboard = ({ report, onNavigate }: DashboardProps) => {
   const { language, t } = useLanguage();
 
   if (!report) return <div className="animate-pulse h-96 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>;
@@ -84,7 +85,8 @@ export const Dashboard = ({ report }: DashboardProps) => {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-center"
+              className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-center cursor-pointer hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200 dark:hover:border-indigo-800 transition-all duration-200"
+              onClick={() => onNavigate('updates')}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
@@ -106,7 +108,8 @@ export const Dashboard = ({ report }: DashboardProps) => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-center"
+              className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-center cursor-pointer hover:shadow-lg hover:scale-[1.02] hover:border-indigo-200 dark:hover:border-indigo-800 transition-all duration-200"
+              onClick={() => onNavigate('knowledge')}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">

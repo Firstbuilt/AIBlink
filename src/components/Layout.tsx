@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { cn } from '../lib/utils';
@@ -16,6 +16,14 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
+
+  // Scroll to top when tab changes
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [activeTab]);
 
   const navItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: { en: 'Dashboard', cn: '综合看板' } },
@@ -29,16 +37,16 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
       <aside 
         className={cn(
           "bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 flex flex-col transition-all duration-300 border-r border-slate-800 h-full overflow-y-auto",
-          isCollapsed ? "w-20" : "w-64"
+          isCollapsed ? "w-16" : "w-48"
         )}
       >
-        <div className={cn("p-6 border-b border-slate-800 flex items-center", isCollapsed ? "justify-center" : "justify-between")}>
+        <div className={cn("p-4 border-b border-slate-800 flex items-center", isCollapsed ? "justify-center" : "justify-between")}>
           {!isCollapsed ? (
-            <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-              <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center text-white relative overflow-hidden">
-                <Eye size={18} fill="currentColor" className="opacity-90" />
+            <h1 className="text-xl font-bold tracking-tight flex items-center gap-2">
+              <div className="w-7 h-7 bg-indigo-500 rounded-lg flex items-center justify-center text-white relative overflow-hidden">
+                <Eye size={16} fill="currentColor" className="opacity-90" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[8px] font-black text-indigo-900 mt-[1px]">AI</span>
+                  <span className="text-[7px] font-black text-indigo-900 mt-[1px]">AI</span>
                 </div>
               </div>
               <span className="text-white">
@@ -47,42 +55,42 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
               </span>
             </h1>
           ) : (
-            <div className="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center text-white relative overflow-hidden">
-               <Eye size={24} fill="currentColor" className="opacity-90" />
+            <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center text-white relative overflow-hidden">
+               <Eye size={18} fill="currentColor" className="opacity-90" />
                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[10px] font-black text-indigo-900 mt-[1px]">AI</span>
+                  <span className="text-[8px] font-black text-indigo-900 mt-[1px]">AI</span>
                </div>
             </div>
           )}
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-2 space-y-1">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
+                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
                 activeTab === item.id
                   ? "bg-indigo-500/10 text-indigo-400 font-medium border border-indigo-500/20"
                   : "text-slate-400 hover:bg-slate-800 hover:text-slate-200",
-                isCollapsed && "justify-center px-2"
+                isCollapsed && "justify-center px-0"
               )}
               title={isCollapsed ? (language === 'en' ? item.label.en : item.label.cn) : undefined}
             >
-              <item.icon size={20} />
-              {!isCollapsed && <span>{language === 'en' ? item.label.en : item.label.cn}</span>}
+              <item.icon size={18} />
+              {!isCollapsed && <span className="text-sm">{language === 'en' ? item.label.en : item.label.cn}</span>}
             </button>
           ))}
         </nav>
 
-        <div className="p-4 border-t border-slate-800 space-y-4">
+        <div className="p-2 border-t border-slate-800 space-y-2">
           {/* Collapse Toggle */}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="w-full flex items-center justify-center p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
           >
-            {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+            {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </button>
 
           {/* Language Toggle */}
@@ -90,7 +98,7 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
             <button
               onClick={() => setLanguage('en')}
               className={cn(
-                "flex-1 py-1 text-xs font-medium rounded-md transition-colors",
+                "flex-1 py-1 text-[10px] font-medium rounded-md transition-colors",
                 language === 'en' ? "bg-slate-600 text-white" : "text-slate-400 hover:text-white",
                 isCollapsed && "w-full"
               )}
@@ -100,7 +108,7 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
             <button
               onClick={() => setLanguage('cn')}
               className={cn(
-                "flex-1 py-1 text-xs font-medium rounded-md transition-colors",
+                "flex-1 py-1 text-[10px] font-medium rounded-md transition-colors",
                 language === 'cn' ? "bg-slate-600 text-white" : "text-slate-400 hover:text-white",
                 isCollapsed && "w-full"
               )}
@@ -113,13 +121,12 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
           <button
             onClick={toggleTheme}
             className={cn(
-              "w-full flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-700 text-slate-300",
+              "w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-700 text-slate-300",
               isCollapsed && "px-0"
             )}
             title={t('Toggle Theme', '切换主题')}
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-            {!isCollapsed && <span>{theme === 'dark' ? t('Light Mode', '亮色模式') : t('Dark Mode', '暗色模式')}</span>}
           </button>
 
           {/* Refresh Button */}
@@ -127,7 +134,7 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
             onClick={onRefresh}
             disabled={isRefreshing}
             className={cn(
-              "w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors text-white shadow-lg shadow-indigo-900/20",
+              "w-full flex items-center justify-center gap-2 px-3 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors text-white shadow-lg shadow-indigo-900/20",
               isRefreshing && "opacity-50 cursor-not-allowed",
               isCollapsed && "px-0"
             )}
@@ -140,7 +147,7 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-950">
+      <main ref={mainRef} className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-950">
         <div className="p-6 md:p-10 max-w-7xl mx-auto">
           {children}
         </div>

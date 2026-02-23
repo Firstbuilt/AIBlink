@@ -102,7 +102,7 @@ function AppContent() {
         onRefresh={handleRefresh}
         isRefreshing={isRefreshing}
       >
-        {activeTab === 'dashboard' && <Dashboard report={report} />}
+        {activeTab === 'dashboard' && <Dashboard report={report} onNavigate={setActiveTab} />}
         {activeTab === 'updates' && <Updates updates={updates} />}
         {activeTab === 'knowledge' && <KnowledgeBase items={knowledgeItems} />}
       </Layout>

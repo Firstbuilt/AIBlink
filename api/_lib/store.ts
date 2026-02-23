@@ -251,7 +251,7 @@ export let riskReport: RiskReport = {
   // Stats will be calculated dynamically in the API
   stats: {
     legislation: { 
-      label: { en: "Active Bills/Acts", cn: "现行法案/草案" },
+      label: { en: "Legislation & Guidance", cn: "立法&指导" },
       count: 0, 
       trend: "stable"
     },
