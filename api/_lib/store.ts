@@ -79,6 +79,24 @@ export let knowledgeBase: KnowledgeItem[] = [
 
 export let updates: UpdateItem[] = [
   {
+    id: "up-9",
+    date: "2026-02-22",
+    title: { en: "AI Act: High-Risk System Registration Open", cn: "AI法案：高风险系统注册开启" },
+    source: "EU AI Office",
+    content: {
+      en: "The EU AI Office has officially opened the registration portal for high-risk AI systems. Providers have until August 2026 to complete registration.",
+      cn: "欧盟AI办公室已正式开放高风险AI系统注册门户。提供商需在2026年8月前完成注册。"
+    },
+    analysis: {
+      en: "Critical operational milestone. Companies must now have their technical documentation ready for upload.",
+      cn: "关键运营里程碑。公司现在必须准备好上传其技术文档。"
+    },
+    parties: [
+      { name: "EU AI Office", type: "Regulator" }
+    ],
+    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
+  },
+  {
     id: "up-8",
     date: "2026-01-25",
     title: { en: "Google Gemini 2 Privacy Audit", cn: "Google Gemini 2隐私审计" },
@@ -216,18 +234,18 @@ export let updates: UpdateItem[] = [
 ];
 
 export let riskReport: RiskReport = {
-  lastUpdated: "2026-02-21",
+  lastUpdated: "2026-02-23",
   score: "Medium",
   summary: {
     en: [
-      "Enforcement has broadened beyond GDPR to specific AI Act violations. The 'DeepSeek' inquiry highlights the EU's focus on data sovereignty and cross-border transfers for non-EU models.",
-      "Major players like OpenAI, Google, and Meta are adapting by implementing stricter age-gating and pausing training on EU data, setting a precedent for 'compliance by design' in the region.",
-      "The regulatory landscape is fragmenting slightly as national authorities (Germany, France, Spain) take the lead on specific issues like 'right to be forgotten' in LLMs and biometric surveillance."
+      "The EU AI Office has opened high-risk system registration, marking a shift from preparation to active compliance operations. Companies must prioritize technical documentation.",
+      "Enforcement remains active, with the 'DeepSeek' inquiry and recent fines highlighting a focus on data sovereignty and prohibited practices like emotion recognition.",
+      "Major players are adapting with stricter age-gating and paused training, setting a 'compliance by design' standard for the market."
     ],
     cn: [
-      "执法范围已从GDPR扩展到具体的AI法案违规行为。'DeepSeek'质询突显了欧盟对非欧盟模型的数据主权和跨境传输的关注。",
-      "OpenAI、Google和Meta等主要参与者正在通过实施更严格的年龄门槛和暂停在欧盟数据上的训练来适应，为该地区的'设计合规'树立了先例。",
-      "随着国家当局（德国、法国、西班牙）在LLM中的'被遗忘权'和生物识别监控等具体问题上占据主导地位，监管环境略显分散。"
+      "欧盟AI办公室已开放高风险系统注册，标志着从准备阶段转向积极的合规运营。公司必须优先处理技术文档。",
+      "执法依然活跃，'DeepSeek'质询和近期的罚款突显了对数据主权和情绪识别等被禁行为的关注。",
+      "主要参与者正在通过更严格的年龄门槛和暂停训练来适应，为市场树立了'设计合规'的标准。"
     ]
   },
   // Stats will be calculated dynamically in the API
