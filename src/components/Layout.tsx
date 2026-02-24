@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { cn } from '../lib/utils';
 import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -71,16 +72,25 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
               key={item.id}
               onClick={() => onTabChange(item.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
+                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 relative group",
                 activeTab === item.id
-                  ? "bg-indigo-500/10 text-indigo-400 font-medium border border-indigo-500/20"
+                  ? "bg-indigo-500/10 text-indigo-400 font-medium"
                   : "text-slate-400 hover:bg-slate-800 hover:text-slate-200",
                 isCollapsed && "justify-center px-0"
               )}
               title={isCollapsed ? (language === 'en' ? item.label.en : item.label.cn) : undefined}
             >
-              <item.icon size={18} />
-              {!isCollapsed && <span className="text-sm">{language === 'en' ? item.label.en : item.label.cn}</span>}
+              {activeTab === item.id && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute left-0 top-2 bottom-2 w-1 bg-indigo-500 rounded-r-full shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+              )}
+              <item.icon size={18} className={cn("relative z-10", activeTab === item.id && "text-indigo-400")} />
+              {!isCollapsed && <span className="text-sm relative z-10">{language === 'en' ? item.label.en : item.label.cn}</span>}
             </button>
           ))}
         </nav>
