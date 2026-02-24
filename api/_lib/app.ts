@@ -100,6 +100,10 @@ app.post("/api/refresh", async (req, res) => {
           - GOOD: "Companies must update technical documentation by August 2, 2026, to comply with the AI Act."
         - RULE 2: EXPLAIN IMPACT. Tell them WHAT to do or WHY it matters.
         - RULE 3: AVOID JARGON. Use terms PMs understand (e.g., "user consent", "feature rollback", "documentation update") rather than legal citations alone.
+
+        CRITICAL INSTRUCTION FOR LINKS:
+        - All URLs, especially in 'relatedEvents', MUST be specific deep links to the actual article, press release, or document.
+        - DO NOT use generic homepages (e.g., "https://www.reuters.com/" is BAD; "https://www.reuters.com/technology/article-123" is GOOD).
         
         Based on the search results:
         1. Generate new update items for any recent events (last 3 months).

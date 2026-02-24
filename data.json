@@ -413,7 +413,7 @@
               "en": "DeepSeek GDPR Inquiry",
               "cn": "DeepSeek GDPR质询"
             },
-            "url": "https://www.politico.eu/"
+            "url": "https://www.google.com/search?q=DeepSeek+GDPR+inquiry"
           }
         ]
       },
@@ -433,7 +433,7 @@
               "en": "First AI Act Fine Issued",
               "cn": "首张AI法案罚单开出"
             },
-            "url": "https://www.aepd.es/"
+            "url": "https://www.google.com/search?q=CNIL+Clearview+AI+fine"
           }
         ]
       },
@@ -453,7 +453,7 @@
               "en": "Mistral AI Certification",
               "cn": "Mistral AI认证"
             },
-            "url": "https://www.lesechos.fr/"
+            "url": "https://www.google.com/search?q=Mistral+AI+compliance+certification"
           }
         ]
       },
@@ -473,7 +473,7 @@
               "en": "OpenAI Age Checks",
               "cn": "OpenAI年龄验证"
             },
-            "url": "https://techcrunch.com/"
+            "url": "https://www.google.com/search?q=OpenAI+Italy+age+verification"
           }
         ]
       },
@@ -493,7 +493,7 @@
               "en": "Meta Pauses AI Training",
               "cn": "Meta暂停AI训练"
             },
-            "url": "https://www.reuters.com/"
+            "url": "https://www.google.com/search?q=Meta+pauses+AI+training+in+Europe"
           }
         ]
       }

@@ -273,7 +273,7 @@ const defaultRiskReport: RiskReport = {
       },
       citation: "GDPR Ch. V",
       relatedEvents: [
-         { title: { en: "DeepSeek GDPR Inquiry", cn: "DeepSeek GDPR质询" }, url: "https://www.politico.eu/" }
+         { title: { en: "DeepSeek GDPR Inquiry", cn: "DeepSeek GDPR质询" }, url: "https://www.google.com/search?q=DeepSeek+GDPR+inquiry" }
       ]
     },
     { 
@@ -284,7 +284,7 @@ const defaultRiskReport: RiskReport = {
       },
       citation: "AI Act Art. 5",
       relatedEvents: [
-         { title: { en: "First AI Act Fine Issued", cn: "首张AI法案罚单开出" }, url: "https://www.aepd.es/" }
+         { title: { en: "First AI Act Fine Issued", cn: "首张AI法案罚单开出" }, url: "https://www.google.com/search?q=CNIL+Clearview+AI+fine" }
       ]
     },
     { 
@@ -295,7 +295,7 @@ const defaultRiskReport: RiskReport = {
       },
       citation: "AI Act Art. 53",
       relatedEvents: [
-        { title: { en: "Mistral AI Certification", cn: "Mistral AI认证" }, url: "https://www.lesechos.fr/" }
+        { title: { en: "Mistral AI Certification", cn: "Mistral AI认证" }, url: "https://www.google.com/search?q=Mistral+AI+compliance+certification" }
       ]
     },
     { 
@@ -306,7 +306,7 @@ const defaultRiskReport: RiskReport = {
       },
       citation: "DSA Art. 28",
       relatedEvents: [
-        { title: { en: "OpenAI Age Checks", cn: "OpenAI年龄验证" }, url: "https://techcrunch.com/" }
+        { title: { en: "OpenAI Age Checks", cn: "OpenAI年龄验证" }, url: "https://www.google.com/search?q=OpenAI+Italy+age+verification" }
       ]
     },
     { 
@@ -317,7 +317,7 @@ const defaultRiskReport: RiskReport = {
       },
       citation: "GDPR Art. 6",
       relatedEvents: [
-        { title: { en: "Meta Pauses AI Training", cn: "Meta暂停AI训练" }, url: "https://www.reuters.com/" }
+        { title: { en: "Meta Pauses AI Training", cn: "Meta暂停AI训练" }, url: "https://www.google.com/search?q=Meta+pauses+AI+training+in+Europe" }
       ]
     }
   ]
