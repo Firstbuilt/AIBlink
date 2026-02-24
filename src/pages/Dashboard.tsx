@@ -100,7 +100,6 @@ export const Dashboard = ({ report, onNavigate }: DashboardProps) => {
                 </span>
               </div>
               <div className="text-5xl font-bold text-slate-900 dark:text-white mt-2">{report.stats.enforcement.count}</div>
-              <p className="text-xs text-slate-400 mt-2">{t('Recent Actions in Feed', '动态流中的近期行动')}</p>
             </motion.div>
 
             {/* Legislation Stat */}
@@ -123,7 +122,6 @@ export const Dashboard = ({ report, onNavigate }: DashboardProps) => {
                 </span>
               </div>
               <div className="text-5xl font-bold text-slate-900 dark:text-white mt-2">{report.stats.legislation.count}</div>
-              <p className="text-xs text-slate-400 mt-2">{t('Tracked in Knowledge Base', '知识库收录数量')}</p>
             </motion.div>
           </div>
 

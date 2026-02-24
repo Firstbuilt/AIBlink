@@ -93,8 +93,13 @@ app.post("/api/refresh", async (req, res) => {
         CRITICAL INSTRUCTION FOR EXECUTIVE SUMMARY:
         - Target Audience: Product Managers and Executives (Non-technical, Non-legal).
         - Tone: Actionable, Specific, and Business-Oriented.
-        - RULE 1: NO VAGUE REFERENCES. Do not say "recent enforcement" or "upcoming deadlines". Instead, say "The fine against Company X" or "The deadline on August 2026".
+        - RULE 1: NO VAGUE PRONOUNS OR REFERENCES. 
+          - BAD: "Recent enforcement actions highlight the importance of data governance." (Which actions?)
+          - GOOD: "The €20M fine against Clearview AI highlights the strict ban on scraping biometric data."
+          - BAD: "Companies should prepare for the upcoming deadline." (Which deadline?)
+          - GOOD: "Companies must update technical documentation by August 2, 2026, to comply with the AI Act."
         - RULE 2: EXPLAIN IMPACT. Tell them WHAT to do or WHY it matters.
+        - RULE 3: AVOID JARGON. Use terms PMs understand (e.g., "user consent", "feature rollback", "documentation update") rather than legal citations alone.
         
         Based on the search results:
         1. Generate new update items for any recent events (last 3 months).

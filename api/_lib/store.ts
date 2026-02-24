@@ -259,7 +259,7 @@ const defaultRiskReport: RiskReport = {
       trend: "stable"
     },
     enforcement: {
-      label: { en: "Enforcement Actions", cn: "执法行动 (2025-26)" },
+      label: { en: "Enforcement Actions", cn: "执法行动" },
       count: 0, 
       trend: "up"
     }

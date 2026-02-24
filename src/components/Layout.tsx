@@ -21,7 +21,8 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
   // Scroll to top when tab changes
   useEffect(() => {
     if (mainRef.current) {
-      mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      // Use scrollTop = 0 for immediate and reliable scrolling
+      mainRef.current.scrollTop = 0;
     }
   }, [activeTab]);
 
@@ -37,7 +38,7 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
       <aside 
         className={cn(
           "bg-slate-900 dark:bg-slate-950 text-white flex-shrink-0 flex flex-col transition-all duration-300 border-r border-slate-800 h-full overflow-y-auto",
-          isCollapsed ? "w-16" : "w-48"
+          isCollapsed ? "w-16" : "w-40"
         )}
       >
         <div className={cn("p-4 border-b border-slate-800 flex items-center", isCollapsed ? "justify-center" : "justify-between")}>
