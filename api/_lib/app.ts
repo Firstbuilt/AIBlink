@@ -1,6 +1,6 @@
 import express from "express";
 import { GoogleGenAI } from "@google/genai";
-import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase } from './store.js';
+import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase, saveData } from './store.js';
 import "dotenv/config";
 
 // Force Vercel update
@@ -90,6 +90,12 @@ app.post("/api/refresh", async (req, res) => {
         Current Date: ${dateString}.
         Task: Update ALL content to reflect the status as of today.
         
+        CRITICAL INSTRUCTION FOR EXECUTIVE SUMMARY:
+        - Target Audience: Product Managers and Executives (Non-technical, Non-legal).
+        - Tone: Actionable, Specific, and Business-Oriented.
+        - RULE 1: NO VAGUE REFERENCES. Do not say "recent enforcement" or "upcoming deadlines". Instead, say "The fine against Company X" or "The deadline on August 2026".
+        - RULE 2: EXPLAIN IMPACT. Tell them WHAT to do or WHY it matters.
+        
         Based on the search results:
         1. Generate new update items for any recent events (last 3 months).
         2. Completely REGENERATE the Risk Assessment Report to reflect the status as of ${dateString}.
@@ -171,14 +177,14 @@ app.post("/api/refresh", async (req, res) => {
           score: "Medium",
           summary: {
             en: [
-              "Regulatory scrutiny is intensifying as the AI Act implementation phase progresses.",
-              "Recent enforcement actions highlight the importance of data governance.",
-              "Companies should prepare for upcoming deadlines in late 2026."
+              "The EU AI Office has released new transparency guidelines. We must update our technical documentation by Q3 2026 to include detailed model training data sources.",
+              "Recent fines against RetailCo for emotion recognition show that using AI to analyze customer sentiment in stores is now strictly prohibited.",
+              "With the new age verification rules enforced on OpenAI, we need to verify if our user sign-up flow meets the 'strict age-gating' standard."
             ],
             cn: [
-              "随着AI法案实施阶段的推进，监管审查正在加强。",
-              "近期的执法行动突显了数据治理的重要性。",
-              "公司应为2026年底即将到来的截止日期做好准备。"
+              "欧盟AI办公室发布了新的透明度指南。我们必须在2026年第三季度前更新技术文档，详细说明模型训练数据的来源。",
+              "近期RetailCo因情绪识别被罚款，这表明在商店中使用AI分析客户情绪现在是被严格禁止的。",
+              "随着OpenAI被强制执行新的年龄验证规则，我们需要核实我们的用户注册流程是否达到了'严格年龄门槛'的标准。"
             ]
           },
           focusAreas: riskReport.focusAreas // Keep existing focus areas for stability

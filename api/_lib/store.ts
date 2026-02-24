@@ -1,8 +1,11 @@
+import fs from 'fs';
+import path from 'path';
 import { KnowledgeItem, UpdateItem, RiskReport } from './types.js';
 
-// In-memory store for demo purposes (would be a DB in production)
-// Seeding with some initial data relevant to Feb 2026
-export let knowledgeBase: KnowledgeItem[] = [
+const DATA_FILE = path.join(process.cwd(), 'data.json');
+
+// Initial default data
+const defaultKnowledgeBase: KnowledgeItem[] = [
   {
     id: "kb-1",
     title: { en: "EU AI Act", cn: "欧盟人工智能法案" },
@@ -77,7 +80,7 @@ export let knowledgeBase: KnowledgeItem[] = [
   }
 ];
 
-export let updates: UpdateItem[] = [
+const defaultUpdates: UpdateItem[] = [
   {
     id: "up-9",
     date: "2026-02-22",
@@ -233,19 +236,19 @@ export let updates: UpdateItem[] = [
   }
 ];
 
-export let riskReport: RiskReport = {
+const defaultRiskReport: RiskReport = {
   lastUpdated: "2026-02-23",
   score: "Medium",
   summary: {
     en: [
-      "The EU AI Office has opened high-risk system registration, marking a shift from preparation to active compliance operations. Companies must prioritize technical documentation.",
-      "Enforcement remains active, with the 'DeepSeek' inquiry and recent fines highlighting a focus on data sovereignty and prohibited practices like emotion recognition.",
-      "Major players are adapting with stricter age-gating and paused training, setting a 'compliance by design' standard for the market."
+      "The EU AI Office has opened the registration portal. If our product is classified as 'High-Risk' (e.g., HR or Education tools), we MUST complete registration and upload technical docs by August 2026 to avoid penalties.",
+      "Regulators are investigating DeepSeek for sending EU data to China. We need to audit our own data flows to ensure we aren't accidentally sending user data to non-compliant servers.",
+      "OpenAI has implemented stricter age verification. We should review our own age-gating features immediately to ensure minors cannot access restricted AI content, reducing our compliance risk."
     ],
     cn: [
-      "欧盟AI办公室已开放高风险系统注册，标志着从准备阶段转向积极的合规运营。公司必须优先处理技术文档。",
-      "执法依然活跃，'DeepSeek'质询和近期的罚款突显了对数据主权和情绪识别等被禁行为的关注。",
-      "主要参与者正在通过更严格的年龄门槛和暂停训练来适应，为市场树立了'设计合规'的标准。"
+      "欧盟AI办公室已开放注册门户。如果我们的产品属于'高风险'类别（如招聘或教育工具），必须在2026年8月前完成注册并上传技术文档，否则将面临罚款或下架。",
+      "监管机构正在调查DeepSeek将欧盟数据传输至中国的问题。我们需要立即排查自身的数据流向，确保没有在未经授权的情况下将用户数据传输到境外服务器。",
+      "OpenAI近期加强了年龄验证措施。建议我们立即审查产品的年龄门槛，确保未成年人无法使用不适宜的AI功能，以降低合规风险。"
     ]
   },
   // Stats will be calculated dynamically in the API
@@ -320,23 +323,62 @@ export let riskReport: RiskReport = {
   ]
 };
 
+// State variables
+export let knowledgeBase: KnowledgeItem[] = [...defaultKnowledgeBase];
+export let updates: UpdateItem[] = [...defaultUpdates];
+export let riskReport: RiskReport = { ...defaultRiskReport };
+
+// Persistence Logic
+function loadData() {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+      const data = JSON.parse(raw);
+      if (data.knowledgeBase) knowledgeBase = data.knowledgeBase;
+      if (data.updates) updates = data.updates;
+      if (data.riskReport) riskReport = data.riskReport;
+      console.log("Data loaded from persistence.");
+    }
+  } catch (e) {
+    console.error("Failed to load persistence data:", e);
+  }
+}
+
+export function saveData() {
+  try {
+    const data = {
+      knowledgeBase,
+      updates,
+      riskReport
+    };
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    console.log("Data saved to persistence.");
+  } catch (e) {
+    console.error("Failed to save persistence data:", e);
+  }
+}
+
 // Helper to recalculate stats
 export function recalculateStats() {
   riskReport.stats.legislation.count = knowledgeBase.length;
   riskReport.stats.enforcement.count = updates.length;
 }
 
-// Initial calculation
+// Initial load
+loadData();
 recalculateStats();
 
 export function setKnowledgeBase(newData: KnowledgeItem[]) {
   knowledgeBase = newData;
+  saveData();
 }
 
 export function setUpdates(newData: UpdateItem[]) {
   updates = newData;
+  saveData();
 }
 
 export function setRiskReport(newData: RiskReport) {
   riskReport = newData;
+  saveData();
 }
