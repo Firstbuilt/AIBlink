@@ -213,14 +213,18 @@ app.post("/api/refresh", async (req, res) => {
 
     recalculateStats();
 
+    // Sort data before returning to ensure latest content is on top
+    const sortedUpdates = [...updates].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const sortedKnowledgeBase = [...knowledgeBase].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
     // Return the FULL merged data so the client can update its state immediately
     // This handles the stateless serverless issue
     res.json({ 
       success: true, 
       data: {
-        updates: updates, // Return the full updated list
+        updates: sortedUpdates, // Return the full updated list sorted
         riskReport: riskReport, // Return the full updated report
-        knowledgeBase: knowledgeBase // Return the full KB (even if not updated)
+        knowledgeBase: sortedKnowledgeBase // Return the full KB sorted
       }
     });
 
