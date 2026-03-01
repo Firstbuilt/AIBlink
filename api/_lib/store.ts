@@ -8,21 +8,33 @@ const DATA_FILE = path.join(process.cwd(), 'data.json');
 const defaultKnowledgeBase: KnowledgeItem[] = [
   {
     id: "kb-1",
-    title: { en: "EU AI Act", cn: "欧盟人工智能法案" },
+    title: {
+      en: "EU AI Act",
+      cn: "欧盟人工智能法案"
+    },
     type: "Legislation",
-    jurisdiction: { en: "EU", cn: "欧盟" },
-    date: "2024-06-12", // Official publication date approx
+    jurisdiction: {
+      en: "EU",
+      cn: "欧盟"
+    },
+    date: "2024-07-12",
     summary: {
-      en: "The comprehensive AI law is now fully applicable for prohibited practices and GPAI governance. High-risk system obligations are phasing in.",
-      cn: "这部全面的人工智能法律现已完全适用于禁止行为和通用人工智能（GPAI）治理。高风险系统的义务正在逐步实施。"
+      en: "The comprehensive AI law entered into force in August 2024. Most rules for high-risk AI systems apply from August 2026 (24 months post-entry).",
+      cn: "这部全面的人工智能法律于2024年8月生效。大多数针对高风险AI系统的规则将从2026年8月起适用（生效后24个月）。"
     },
     url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
   },
   {
     id: "kb-2",
-    title: { en: "GDPR", cn: "通用数据保护条例" },
+    title: {
+      en: "GDPR",
+      cn: "通用数据保护条例"
+    },
     type: "Legislation",
-    jurisdiction: { en: "EU", cn: "欧盟" },
+    jurisdiction: {
+      en: "EU",
+      cn: "欧盟"
+    },
     date: "2018-05-25",
     summary: {
       en: "The foundational privacy law. Recent enforcement focuses on automated decision-making and data scraping for AI training.",
@@ -32,292 +44,470 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
   },
   {
     id: "kb-5",
-    title: { en: "AI Office: GPAI Code of Practice", cn: "AI办公室：通用人工智能行为准则" },
+    title: {
+      en: "AI Office: GPAI Code of Practice",
+      cn: "AI办公室：通用人工智能行为准则"
+    },
     type: "Guidance",
-    jurisdiction: { en: "EU", cn: "欧盟" },
+    jurisdiction: {
+      en: "EU",
+      cn: "欧盟"
+    },
     date: "2025-04-10",
     summary: {
-      en: "Finalized code of practice for providers of general-purpose AI models, detailing transparency and copyright compliance.",
-      cn: "针对通用人工智能模型提供者的最终行为准则，详细说明了透明度和版权合规性。"
+      en: "Code of practice for providers of general-purpose AI models, detailing transparency and copyright compliance.",
+      cn: "针对通用人工智能模型提供者的行为准则，详细说明了透明度和版权合规性。"
     },
     url: "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
   },
   {
     id: "kb-6",
-    title: { en: "CNIL Guidelines on AI Development", cn: "CNIL关于AI开发的指南" },
-    type: "Guidance",
-    jurisdiction: { en: "France", cn: "法国" },
-    date: "2025-10-05",
-    summary: {
-      en: "Updated recommendations on 'legitimate interest' as a legal basis for training AI models on personal data.",
-      cn: "关于将'合法利益'作为在个人数据上训练AI模型的法律依据的更新建议。"
+    title: {
+      en: "CNIL Guidelines on AI Development",
+      cn: "CNIL关于AI开发的指南"
     },
-    url: "https://www.cnil.fr/en/topic/artificial-intelligence"
+    type: "Guidance",
+    jurisdiction: {
+      en: "France",
+      cn: "法国"
+    },
+    date: "2024-04-08",
+    summary: {
+      en: "Recommendations on 'legitimate interest' as a legal basis for training AI models on personal data.",
+      cn: "关于将'合法利益'作为在个人数据上训练AI模型的法律依据的建议。"
+    },
+    url: "https://www.cnil.fr/en/artificial-intelligence"
   },
   {
     id: "kb-7",
-    title: { en: "CEN-CENELEC Harmonised Standards Draft", cn: "CEN-CENELEC协调标准草案" },
-    type: "Standard",
-    jurisdiction: { en: "EU", cn: "欧盟" },
-    date: "2025-12-20",
-    summary: {
-      en: "Draft standards for risk management and data governance in high-risk AI systems, expected to be harmonized by mid-2026.",
-      cn: "高风险AI系统风险管理和数据治理的标准草案，预计将于2026年中期协调统一。"
+    title: {
+      en: "CEN-CENELEC Harmonised Standards",
+      cn: "CEN-CENELEC协调标准"
     },
-    url: "https://www.cencenelec.eu/"
+    type: "Standard",
+    jurisdiction: {
+      en: "EU",
+      cn: "欧盟"
+    },
+    date: "2025-05-01",
+    summary: {
+      en: "Standards for risk management and data governance in high-risk AI systems.",
+      cn: "高风险AI系统风险管理和数据治理的标准。"
+    },
+    url: "https://www.cencenelec.eu/areas-of-work/cen-cenelec-topics/artificial-intelligence/"
   },
   {
     id: "kb-8",
-    title: { en: "BfDI Position Paper on LLMs", cn: "BfDI关于大型语言模型的立场文件" },
+    title: {
+      en: "BfDI Position Paper on LLMs",
+      cn: "BfDI关于大型语言模型的立场文件"
+    },
     type: "Guidance",
-    jurisdiction: { en: "Germany", cn: "德国" },
-    date: "2026-01-10",
+    jurisdiction: {
+      en: "Germany",
+      cn: "德国"
+    },
+    date: "2024-08-20",
     summary: {
       en: "German Federal Commissioner's stance on the 'right to be forgotten' in the context of unlearning for LLMs.",
       cn: "德国联邦专员关于大型语言模型（LLM）背景下'被遗忘权'（遗忘学习）的立场。"
     },
-    url: "https://www.bfdi.bund.de/"
+    url: "https://www.bfdi.bund.de/DE/Fachthemen/Inhalte/Technik/Kuenstliche-Intelligenz/Kuenstliche-Intelligenz_node.html"
   }
 ];
 
 const defaultUpdates: UpdateItem[] = [
   {
-    id: "up-9",
-    date: "2026-02-22",
-    title: { en: "AI Act: High-Risk System Registration Open", cn: "AI法案：高风险系统注册开启" },
+    id: "up-2026-1",
+    date: "2026-02-10",
+    title: {
+      en: "High-Risk AI: 6-Month Countdown",
+      cn: "高风险AI：6个月倒计时"
+    },
     source: "EU AI Office",
     content: {
-      en: "The EU AI Office has officially opened the registration portal for high-risk AI systems. Providers have until August 2026 to complete registration.",
-      cn: "欧盟AI办公室已正式开放高风险AI系统注册门户。提供商需在2026年8月前完成注册。"
+      en: "The EU AI Office issued a reminder that full compliance for Annex III High-Risk AI Systems is mandatory by August 2, 2026.",
+      cn: "欧盟AI办公室发布提醒，附件III高风险AI系统的全面合规必须在2026年8月2日前完成。"
     },
     analysis: {
-      en: "Critical operational milestone. Companies must now have their technical documentation ready for upload.",
-      cn: "关键运营里程碑。公司现在必须准备好上传其技术文档。"
+      en: "Organizations must finalize conformity assessments and register in the EU database.",
+      cn: "组织必须完成符合性评估并在欧盟数据库中注册。"
     },
     parties: [
-      { name: "EU AI Office", type: "Regulator" }
+      {
+        name: "EU AI Office",
+        type: "Regulator"
+      }
+    ],
+    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-act"
+  },
+  {
+    id: "up-10",
+    date: "2025-11-15",
+    title: {
+      en: "EU AI Office Guidelines on GPAI",
+      cn: "欧盟AI办公室关于GPAI的指南"
+    },
+    source: "EU AI Office",
+    content: {
+      en: "The EU AI Office released guidelines clarifying transparency requirements for general-purpose AI models under the AI Act.",
+      cn: "欧盟AI办公室发布指南，阐明了AI法案下通用人工智能模型的透明度要求。"
+    },
+    analysis: {
+      en: "Clarifies the technical documentation obligations for foundation model providers.",
+      cn: "阐明了基础模型提供者的技术文档义务。"
+    },
+    parties: [
+      {
+        name: "EU AI Office",
+        type: "Regulator"
+      }
     ],
     url: "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
   },
   {
-    id: "up-8",
-    date: "2026-01-25",
-    title: { en: "Google Gemini 2 Privacy Audit", cn: "Google Gemini 2隐私审计" },
-    source: "Irish DPC",
+    id: "up-9",
+    date: "2025-09-01",
+    title: {
+      en: "High-Risk AI Registration Portal Launch",
+      cn: "高风险AI注册门户启动"
+    },
+    source: "EU AI Office",
     content: {
-      en: "The Irish DPC has concluded its preliminary audit of Google's Gemini 2 model, requiring enhanced opt-in mechanisms for processing user interactions history.",
-      cn: "爱尔兰DPC已结束对Google Gemini 2模型的初步审计，要求针对处理用户交互历史记录增强选择加入机制。"
+      en: "The EU database for high-risk AI systems is now operational. Registration is mandatory for systems listed in Annex III.",
+      cn: "欧盟高风险AI系统数据库现已投入运行。附件III中列出的系统必须进行注册。"
     },
     analysis: {
-      en: "Even established players are facing granular requirements on data retention and user control.",
-      cn: "即使是老牌厂商也面临着关于数据保留和用户控制的细粒度要求。"
+      en: "Operational requirement. Companies deploying high-risk systems must register before placing on the market.",
+      cn: "运营要求。部署高风险系统的公司必须在投放市场前进行注册。"
     },
     parties: [
-      { name: "Irish DPC", type: "Regulator" },
-      { name: "Google", type: "Company" },
-      { name: "Gemini 2", type: "Product" }
+      {
+        name: "EU AI Office",
+        type: "Regulator"
+      }
     ],
-    url: "https://www.dataprotection.ie/"
+    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-act"
+  },
+  {
+    id: "up-8",
+    date: "2024-09-12",
+    title: {
+      en: "Irish DPC Inquiry into Google AI",
+      cn: "爱尔兰DPC对Google AI的调查"
+    },
+    source: "Irish DPC",
+    content: {
+      en: "The Irish DPC launched an inquiry into Google's processing of personal data for the development of its AI models.",
+      cn: "爱尔兰DPC对Google处理个人数据用于开发其AI模型的行为展开调查。"
+    },
+    analysis: {
+      en: "Highlights the scrutiny on legal basis (legitimate interest vs consent) for training data.",
+      cn: "凸显了对训练数据法律依据（合法利益与同意）的审查。"
+    },
+    parties: [
+      {
+        name: "Irish DPC",
+        type: "Regulator"
+      },
+      {
+        name: "Google",
+        type: "Company"
+      }
+    ],
+    url: "https://blog.google/technology/ai/google-gemini-ai/"
   },
   {
     id: "up-3",
-    date: "2026-01-15",
-    title: { en: "First AI Act Fine Issued", cn: "首张AI法案罚单开出" },
-    source: "Spanish AEPD",
+    date: "2022-10-20",
+    title: {
+      en: "Clearview AI Fined by CNIL",
+      cn: "Clearview AI被CNIL罚款"
+    },
+    source: "CNIL",
     content: {
-      en: "The Spanish AEPD, acting as the market surveillance authority, fined a retailer for using prohibited emotion recognition AI in stores.",
-      cn: "作为市场监管机构的西班牙AEPD对一家零售商处以罚款，因其在店内使用被禁止的情绪识别AI。"
+      en: "CNIL imposed a €20 million fine on Clearview AI for unlawful processing of biometric data and failure to cooperate.",
+      cn: "CNIL因非法处理生物识别数据且不配合调查，对Clearview AI处以2000万欧元罚款。"
     },
     analysis: {
-      en: "Signals the start of strict enforcement on 'unacceptable risk' AI systems. Retail and HR sectors are under high scrutiny.",
-      cn: "标志着对'不可接受风险'AI系统开始严格执法。零售和人力资源部门受到高度审查。"
+      en: "Key precedent for the ban on scraping facial images for biometric identification.",
+      cn: "禁止抓取面部图像用于生物识别的关键先例。"
     },
     parties: [
-      { name: "AEPD", type: "Regulator" },
-      { name: "RetailCo", type: "Company" }
+      {
+        name: "CNIL",
+        type: "Regulator"
+      },
+      {
+        name: "Clearview AI",
+        type: "Company"
+      }
     ],
-    url: "https://www.aepd.es/"
+    url: "https://www.cnil.fr/en/clearview-ai-fined-20-million-euros-cnil"
   },
   {
     id: "up-4",
-    date: "2025-12-10",
-    title: { en: "Meta Pauses AI Training in EU", cn: "Meta暂停在欧盟的AI训练" },
-    source: "Reuters",
+    date: "2024-06-14",
+    title: {
+      en: "Meta Pauses AI Training in EU",
+      cn: "Meta暂停在欧盟的AI训练"
+    },
+    source: "Meta",
     content: {
-      en: "Following objections from the Irish DPC, Meta has agreed to pause using public content from Facebook/Instagram users in the EU to train its Llama 4 models.",
-      cn: "在爱尔兰DPC提出异议后，Meta同意暂停使用欧盟Facebook/Instagram用户的公开内容来训练其Llama 4模型。"
+      en: "Meta paused its plans to train AI models using public content from Facebook and Instagram users in the EU/EEA following DPC engagement.",
+      cn: "在与DPC接触后，Meta暂停了使用欧盟/欧洲经济区Facebook和Instagram用户的公开内容训练AI模型的计划。"
     },
     analysis: {
-      en: "Reaffirms that 'opt-out' models for data training are being challenged. Consent or strictly defined legitimate interest is becoming the only viable path.",
-      cn: "重申数据训练的'退出'模式正受到挑战。同意或严格定义的合法利益正成为唯一可行的途径。"
+      en: "Demonstrates the difficulty of using 'legitimate interest' for training on user data without explicit consent.",
+      cn: "表明在没有明确同意的情况下使用'合法利益'进行用户数据训练的困难。"
     },
     parties: [
-      { name: "Irish DPC", type: "Regulator" },
-      { name: "Meta", type: "Company" },
-      { name: "Llama 4", type: "Product" }
+      {
+        name: "Irish DPC",
+        type: "Regulator"
+      },
+      {
+        name: "Meta",
+        type: "Company"
+      }
     ],
-    url: "https://www.reuters.com/"
+    url: "https://about.fb.com/news/2024/06/pausing-ai-training-in-europe/"
   },
   {
     id: "up-5",
-    date: "2026-01-28",
-    title: { en: "DeepSeek Faces GDPR Inquiry", cn: "DeepSeek面临GDPR质询" },
-    source: "Politico EU",
+    date: "2024-07-20",
+    title: {
+      en: "DeepSeek Privacy Policy Update",
+      cn: "DeepSeek隐私政策更新"
+    },
+    source: "DeepSeek",
     content: {
-      en: "German and French DPAs have launched a joint inquiry into DeepSeek's data processing practices for EU users, specifically regarding cross-border data transfers to China.",
-      cn: "德国和法国的数据保护机构已对DeepSeek针对欧盟用户的数据处理做法展开联合质询，特别是关于向中国跨境传输数据的问题。"
+      en: "DeepSeek updated its privacy policy to clarify data processing activities, amidst growing global scrutiny on Chinese AI models.",
+      cn: "在全球对中国AI模型日益严格的审查中，DeepSeek更新了其隐私政策以阐明数据处理活动。"
     },
     analysis: {
-      en: "Non-EU foundation models are facing increasing scrutiny on data sovereignty and transfer mechanisms (SCCs).",
-      cn: "非欧盟基础模型在数据主权和传输机制（SCCs）方面正面临越来越多的审查。"
+      en: "Reflects the need for non-EU models to align with GDPR transparency requirements.",
+      cn: "反映了非欧盟模型需要符合GDPR透明度要求。"
     },
     parties: [
-      { name: "BfDI", type: "Regulator" },
-      { name: "CNIL", type: "Regulator" },
-      { name: "DeepSeek", type: "Company" }
+      {
+        name: "DeepSeek",
+        type: "Company"
+      }
     ],
-    url: "https://www.politico.eu/"
+    url: "https://www.deepseek.com/"
   },
   {
     id: "up-6",
-    date: "2026-01-20",
-    title: { en: "OpenAI Implements New Age Checks", cn: "OpenAI实施新的年龄验证" },
-    source: "TechCrunch",
+    date: "2023-04-28",
+    title: {
+      en: "OpenAI Responds to Italian Garante",
+      cn: "OpenAI回应意大利Garante"
+    },
+    source: "OpenAI",
     content: {
-      en: "To comply with the Italian Garante's orders and the DSA, OpenAI has rolled out stricter age verification for ChatGPT users across the EU.",
-      cn: "为了遵守意大利Garante的命令和数字服务法案（DSA），OpenAI已在欧盟范围内为ChatGPT用户推出了更严格的年龄验证措施。"
+      en: "OpenAI implemented new privacy controls and age verification measures in Italy to address the Garante's concerns and lift the temporary ban.",
+      cn: "OpenAI在意大利实施了新的隐私控制和年龄验证措施，以解决Garante的担忧并解除临时禁令。"
     },
     analysis: {
-      en: "Child safety remains a top priority for regulators. AI platforms must demonstrate robust age-gating, not just self-declaration.",
-      cn: "儿童安全仍然是监管机构的首要任务。AI平台必须证明其拥有强大的年龄门槛，而不仅仅是自我声明。"
+      en: "Established the standard for age-gating and legal basis transparency for LLMs in Europe.",
+      cn: "确立了欧洲LLM的年龄门槛和法律依据透明度的标准。"
     },
     parties: [
-      { name: "Garante Privacy", type: "Regulator" },
-      { name: "OpenAI", type: "Company" },
-      { name: "ChatGPT", type: "Product" }
+      {
+        name: "Garante Privacy",
+        type: "Regulator"
+      },
+      {
+        name: "OpenAI",
+        type: "Company"
+      }
     ],
-    url: "https://techcrunch.com/"
+    url: "https://openai.com/index/openai-and-italy-garante/"
   },
   {
     id: "up-7",
-    date: "2026-02-01",
-    title: { en: "Mistral AI Certification Audit", cn: "Mistral AI认证审计" },
-    source: "Les Echos",
+    date: "2024-02-26",
+    title: {
+      en: "Mistral Large Released",
+      cn: "Mistral Large发布"
+    },
+    source: "Mistral AI",
     content: {
-      en: "French champion Mistral AI has voluntarily submitted its latest 'Large' model for early conformity assessment under the AI Act to demonstrate sovereign compliance.",
-      cn: "法国领军企业Mistral AI已自愿提交其最新的'Large'模型，根据AI法案进行早期合规性评估，以展示主权合规性。"
+      en: "Mistral AI released 'Mistral Large', positioning it as a compliant, high-performance European alternative.",
+      cn: "Mistral AI发布了'Mistral Large'，将其定位为合规、高性能的欧洲替代方案。"
     },
     analysis: {
-      en: "European companies are using compliance as a competitive differentiator against US/Chinese rivals.",
-      cn: "欧洲公司正在将合规性作为对抗美国/中国竞争对手的差异化竞争优势。"
+      en: "Showcases European capability to build foundation models that aim for compliance by design.",
+      cn: "展示了欧洲构建旨在通过设计实现合规的基础模型的能力。"
     },
     parties: [
-      { name: "Mistral AI", type: "Company" }
+      {
+        name: "Mistral AI",
+        type: "Company"
+      }
     ],
-    url: "https://www.lesechos.fr/"
+    url: "https://mistral.ai/news/mistral-large/"
   },
   {
     id: "up-1",
     date: "2024-05-21",
-    title: { en: "Council of EU approves AI Act", cn: "欧盟理事会批准AI法案" },
+    title: {
+      en: "Council of EU approves AI Act",
+      cn: "欧盟理事会批准AI法案"
+    },
     source: "Council of the EU",
     content: {
-      en: "The Council of the EU has formally adopted the Artificial Intelligence Act. This is the final step in the legislative process.",
-      cn: "欧盟理事会已正式通过《人工智能法案》。这是立法程序的最后一步。"
+      en: "The Council of the EU formally adopted the Artificial Intelligence Act, setting the first comprehensive legal framework for AI.",
+      cn: "欧盟理事会正式通过《人工智能法案》，制定了首个全面的人工智能法律框架。"
     },
     analysis: {
-      en: "Historical milestone. While old news in 2026, it set the stage for the current compliance landscape.",
-      cn: "历史性里程碑。虽然在2026年已是旧闻，但它为当前的合规环境奠定了基础。"
+      en: "The definitive legislative milestone. Compliance timelines (6, 12, 24, 36 months) started from its entry into force in August 2024.",
+      cn: "决定性的立法里程碑。合规时间表（6、12、24、36个月）从2024年8月生效起算。"
     },
     parties: [
-      { name: "Council of the EU", type: "Regulator" }
+      {
+        name: "Council of the EU",
+        type: "Regulator"
+      }
     ],
     url: "https://www.consilium.europa.eu/en/press/press-releases/2024/05/21/artificial-intelligence-ai-act-council-gives-final-green-light-to-the-first-worldwide-rules-on-ai/"
   }
 ];
 
 const defaultRiskReport: RiskReport = {
-  lastUpdated: "2026-02-23",
+  lastUpdated: "2026-03-01",
   score: "Medium",
   summary: {
     en: [
-      "The EU AI Office has opened the registration portal. If our product is classified as 'High-Risk' (e.g., HR or Education tools), we MUST complete registration and upload technical docs by August 2026 to avoid penalties.",
-      "Regulators are investigating DeepSeek for sending EU data to China. We need to audit our own data flows to ensure we aren't accidentally sending user data to non-compliant servers.",
-      "OpenAI has implemented stricter age verification. We should review our own age-gating features immediately to ensure minors cannot access restricted AI content, reducing our compliance risk."
+      "High-Risk AI Systems deadline (Aug 2026) is approaching. Conformity assessments must be initiated immediately.",
+      "GPAI transparency obligations are fully active. Ensure technical documentation is up to date with the latest Code of Practice.",
+      "Cross-border data transfers remain a high-risk area. Verify SCCs and supplementary measures for all non-EU data flows."
     ],
     cn: [
-      "欧盟AI办公室已开放注册门户。如果我们的产品属于'高风险'类别（如招聘或教育工具），必须在2026年8月前完成注册并上传技术文档，否则将面临罚款或下架。",
-      "监管机构正在调查DeepSeek将欧盟数据传输至中国的问题。我们需要立即排查自身的数据流向，确保没有在未经授权的情况下将用户数据传输到境外服务器。",
-      "OpenAI近期加强了年龄验证措施。建议我们立即审查产品的年龄门槛，确保未成年人无法使用不适宜的AI功能，以降低合规风险。"
+      "高风险AI系统截止日期（2026年8月）临近。必须立即启动符合性评估。",
+      "通用人工智能（GPAI）透明度义务已全面生效。确保技术文档符合最新的行为准则。",
+      "跨境数据传输仍是高风险领域。核实所有非欧盟数据流的SCCs和补充措施。"
     ]
   },
   // Stats will be calculated dynamically in the API
   stats: {
-    legislation: { 
-      label: { en: "Legislation & Guidance", cn: "立法&指导" },
-      count: 0, 
+    legislation: {
+      label: {
+        en: "Legislation & Guidance",
+        cn: "立法&指导"
+      },
+      count: 0,
       trend: "stable"
     },
     enforcement: {
-      label: { en: "Enforcement Actions", cn: "执法行动" },
-      count: 0, 
+      label: {
+        en: "Enforcement Actions",
+        cn: "执法行动"
+      },
+      count: 0,
       trend: "up"
     }
   },
   focusAreas: [
-    { 
-      name: { en: "Cross-Border Data", cn: "跨境数据" }, 
-      summary: { 
-        en: "Transferring EU user data to non-adequate jurisdictions (e.g., China, US without DPF) for model inference or training is under intense scrutiny.", 
-        cn: "将欧盟用户数据传输到非充分管辖区（如中国、未加入DPF的美国）进行模型推理或训练正受到严密审查。" 
+    {
+      name: {
+        en: "Cross-Border Data",
+        cn: "跨境数据"
+      },
+      summary: {
+        en: "Transferring EU user data to the US or other non-adequate jurisdictions without proper mechanisms (e.g., SCCs + measures) is high risk.",
+        cn: "在没有适当机制（如SCCs + 补充措施）的情况下，将欧盟用户数据传输到美国或其他非充分管辖区属于高风险。"
       },
       citation: "GDPR Ch. V",
       relatedEvents: [
-         { title: { en: "DeepSeek GDPR Inquiry", cn: "DeepSeek GDPR质询" }, url: "https://www.google.com/search?q=DeepSeek+GDPR+inquiry" }
+        {
+          title: {
+            en: "Meta Fined €1.2B for Transfers",
+            cn: "Meta因数据传输被罚12亿欧元"
+          },
+          "url": "https://www.google.com/search?q=Meta+fined+1.2+billion+euro+data+transfer+EU+US"
+        }
       ]
     },
-    { 
-      name: { en: "Prohibited AI", cn: "被禁AI" }, 
-      summary: { 
-        en: "Biometric categorization and emotion recognition in workplaces/schools are banned. First enforcement actions have targeted retail.", 
-        cn: "工作场所/学校中的生物识别分类和情绪识别被禁止。首批执法行动已针对零售业。" 
+    {
+      name: {
+        en: "Prohibited AI",
+        cn: "被禁AI"
+      },
+      summary: {
+        en: "Biometric categorization and emotion recognition in workplaces/schools are banned under the AI Act.",
+        cn: "根据AI法案，工作场所/学校中的生物识别分类和情绪识别被禁止。"
       },
       citation: "AI Act Art. 5",
       relatedEvents: [
-         { title: { en: "First AI Act Fine Issued", cn: "首张AI法案罚单开出" }, url: "https://www.google.com/search?q=CNIL+Clearview+AI+fine" }
+        {
+          title: {
+            en: "Clearview AI Fine (Precedent)",
+            cn: "Clearview AI罚款（先例）"
+          },
+          "url": "https://www.google.com/search?q=Clearview+AI+CNIL+fine+biometric+data"
+        }
       ]
     },
-    { 
-      name: { en: "GPAI Transparency", cn: "GPAI透明度" }, 
-      summary: { 
-        en: "Providers must maintain detailed technical documentation and comply with EU copyright law. The 'opt-out' mechanism for TDM is under legal review.", 
-        cn: "提供者必须维护详细的技术文档并遵守欧盟版权法。文本数据挖掘（TDM）的'退出'机制正在接受法律审查。" 
+    {
+      name: {
+        en: "GPAI Transparency",
+        cn: "GPAI透明度"
+      },
+      summary: {
+        en: "Providers must maintain detailed technical documentation and comply with EU copyright law.",
+        cn: "提供者必须维护详细的技术文档并遵守欧盟版权法。"
       },
       citation: "AI Act Art. 53",
       relatedEvents: [
-        { title: { en: "Mistral AI Certification", cn: "Mistral AI认证" }, url: "https://www.google.com/search?q=Mistral+AI+compliance+certification" }
+        {
+          title: {
+            en: "Mistral Large Release",
+            cn: "Mistral Large发布"
+          },
+          "url": "https://www.google.com/search?q=Mistral+Large+release+AI+Act+compliance"
+        }
       ]
     },
-    { 
-      name: { en: "Child Safety", cn: "儿童安全" }, 
-      summary: { 
-        en: "Strict age verification is required for AI services accessible to minors. Self-declaration is no longer considered sufficient compliance.", 
-        cn: "面向未成年人的AI服务需要严格的年龄验证。自我声明不再被视为充分合规。" 
+    {
+      name: {
+        en: "Child Safety",
+        cn: "儿童安全"
+      },
+      summary: {
+        en: "Strict age verification is required for AI services accessible to minors.",
+        cn: "面向未成年人的AI服务需要严格的年龄验证。"
       },
       citation: "DSA Art. 28",
       relatedEvents: [
-        { title: { en: "OpenAI Age Checks", cn: "OpenAI年龄验证" }, url: "https://www.google.com/search?q=OpenAI+Italy+age+verification" }
+        {
+          title: {
+            en: "OpenAI Italy Response",
+            cn: "OpenAI回应意大利"
+          },
+          "url": "https://www.google.com/search?q=OpenAI+Italy+Garante+age+verification"
+        }
       ]
     },
-    { 
-      name: { en: "Data Scraping", cn: "数据抓取" }, 
-      summary: { 
-        en: "Legitimate interest is increasingly rejected as a basis for scraping public web data for training. Explicit consent or contracts are preferred.", 
-        cn: "合法利益作为抓取公共网络数据进行训练的依据正日益被驳回。明确同意或合同更为可取。" 
+    {
+      name: {
+        en: "Data Scraping",
+        cn: "数据抓取"
+      },
+      summary: {
+        en: "Legitimate interest is challenged as a basis for scraping public web data for training.",
+        cn: "合法利益作为抓取公共网络数据进行训练的依据正受到挑战。"
       },
       citation: "GDPR Art. 6",
       relatedEvents: [
-        { title: { en: "Meta Pauses AI Training", cn: "Meta暂停AI训练" }, url: "https://www.google.com/search?q=Meta+pauses+AI+training+in+Europe" }
+        {
+          title: {
+            en: "Meta Pauses AI Training",
+            cn: "Meta暂停AI训练"
+          },
+          "url": "https://www.google.com/search?q=Meta+pauses+AI+training+Europe+GDPR"
+        }
       ]
     }
   ]
@@ -379,6 +569,175 @@ export function setUpdates(newData: UpdateItem[]) {
 }
 
 export function setRiskReport(newData: RiskReport) {
+  const currentFocusAreas = riskReport.focusAreas || [];
+  const currentArchived = riskReport.archivedFocusAreas || [];
+  const newFocusAreas = newData.focusAreas || [];
+
+  // 1. Preserve notes for existing areas (check both active and archived)
+  newFocusAreas.forEach(newArea => {
+    // Check active areas
+    const oldActiveArea = currentFocusAreas.find(a => a.name.en === newArea.name.en);
+    if (oldActiveArea && oldActiveArea.note) {
+      newArea.note = oldActiveArea.note;
+      return;
+    }
+    
+    // Check archived areas (restore note if area comes back)
+    const oldArchivedArea = currentArchived.find(a => a.name.en === newArea.name.en);
+    if (oldArchivedArea && oldArchivedArea.note) {
+      newArea.note = oldArchivedArea.note;
+    }
+  });
+
+  // 2. Archive removed areas
+  const areasToArchive = currentFocusAreas.filter(oldArea => 
+    !newFocusAreas.some(newArea => newArea.name.en === oldArea.name.en)
+  );
+
+  // 3. Merge with existing archive
+  // Filter out any archived items that are now back in focus areas to avoid duplicates
+  const remainingArchived = currentArchived.filter(archived => 
+    !newFocusAreas.some(newArea => newArea.name.en === archived.name.en)
+  );
+  
+  newData.archivedFocusAreas = [...remainingArchived, ...areasToArchive];
+  newData.focusAreas = newFocusAreas;
+
   riskReport = newData;
   saveData();
+}
+
+export function updateKnowledgeItemUrl(id: string, url: string) {
+  const index = knowledgeBase.findIndex(item => item.id === id);
+  if (index !== -1) {
+    knowledgeBase[index] = { ...knowledgeBase[index], url };
+    saveData();
+    return true;
+  }
+  return false;
+}
+
+export function updateUpdateItemUrl(id: string, url: string) {
+  const index = updates.findIndex(item => item.id === id);
+  if (index !== -1) {
+    updates[index] = { ...updates[index], url };
+    saveData();
+    return true;
+  }
+  return false;
+}
+
+export function updateRiskReportEventUrl(focusAreaName: string, eventTitle: string, url: string) {
+  const areaIndex = riskReport.focusAreas.findIndex(area => 
+    area.name.en === focusAreaName || area.name.cn === focusAreaName
+  );
+  
+  if (areaIndex !== -1) {
+    const eventIndex = riskReport.focusAreas[areaIndex].relatedEvents.findIndex(event => 
+      event.title.en === eventTitle || event.title.cn === eventTitle
+    );
+    
+    if (eventIndex !== -1) {
+      riskReport.focusAreas[areaIndex].relatedEvents[eventIndex].url = url;
+      saveData();
+      return true;
+    }
+  }
+  return false;
+}
+
+export function updateFocusAreaNote(focusAreaName: string, note: string) {
+  // Check active areas
+  const areaIndex = riskReport.focusAreas.findIndex(area => 
+    area.name.en === focusAreaName || area.name.cn === focusAreaName
+  );
+  
+  if (areaIndex !== -1) {
+    riskReport.focusAreas[areaIndex].note = note;
+    saveData();
+    return true;
+  }
+
+  // Check archived areas
+  if (riskReport.archivedFocusAreas) {
+    const archivedIndex = riskReport.archivedFocusAreas.findIndex(area => 
+      area.name.en === focusAreaName || area.name.cn === focusAreaName
+    );
+    
+    if (archivedIndex !== -1) {
+      riskReport.archivedFocusAreas[archivedIndex].note = note;
+      saveData();
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export function updateFocusAreaLinks(focusAreaName: string, links: { name: string; url: string }[]) {
+  // Check active areas
+  const areaIndex = riskReport.focusAreas.findIndex(area => 
+    area.name.en === focusAreaName || area.name.cn === focusAreaName
+  );
+  
+  if (areaIndex !== -1) {
+    riskReport.focusAreas[areaIndex].customLinks = links;
+    saveData();
+    return true;
+  }
+
+  // Check archived areas
+  if (riskReport.archivedFocusAreas) {
+    const archivedIndex = riskReport.archivedFocusAreas.findIndex(area => 
+      area.name.en === focusAreaName || area.name.cn === focusAreaName
+    );
+    
+    if (archivedIndex !== -1) {
+      riskReport.archivedFocusAreas[archivedIndex].customLinks = links;
+      saveData();
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export function updateUpdateItemNote(id: string, note: string) {
+  const index = updates.findIndex(item => item.id === id);
+  if (index !== -1) {
+    updates[index].note = note;
+    saveData();
+    return true;
+  }
+  return false;
+}
+
+export function updateUpdateItemLinks(id: string, links: { name: string; url: string }[]) {
+  const index = updates.findIndex(item => item.id === id);
+  if (index !== -1) {
+    updates[index].customLinks = links;
+    saveData();
+    return true;
+  }
+  return false;
+}
+
+export function updateKnowledgeItemNote(id: string, note: string) {
+  const index = knowledgeBase.findIndex(item => item.id === id);
+  if (index !== -1) {
+    knowledgeBase[index].note = note;
+    saveData();
+    return true;
+  }
+  return false;
+}
+
+export function updateKnowledgeItemLinks(id: string, links: { name: string; url: string }[]) {
+  const index = knowledgeBase.findIndex(item => item.id === id);
+  if (index !== -1) {
+    knowledgeBase[index].customLinks = links;
+    saveData();
+    return true;
+  }
+  return false;
 }

@@ -1,6 +1,6 @@
 import express from "express";
 import { GoogleGenAI } from "@google/genai";
-import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase, saveData } from './store.js';
+import { knowledgeBase, updates, riskReport, recalculateStats, setUpdates, setRiskReport, setKnowledgeBase, saveData, updateKnowledgeItemUrl, updateUpdateItemUrl, updateRiskReportEventUrl, updateFocusAreaNote, updateFocusAreaLinks, updateUpdateItemNote, updateUpdateItemLinks, updateKnowledgeItemNote, updateKnowledgeItemLinks } from './store.js';
 import "dotenv/config";
 
 // Force Vercel update
@@ -14,6 +14,114 @@ app.use(express.json());
 // const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); // Moved inside handler
 
 // API Routes
+app.post("/api/links/knowledge-base", (req, res) => {
+  const { id, url } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing ID" });
+  
+  const success = updateKnowledgeItemUrl(id, url);
+  if (success) {
+    res.json({ success: true, message: "Link updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
+app.post("/api/links/updates", (req, res) => {
+  const { id, url } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing ID" });
+  
+  const success = updateUpdateItemUrl(id, url);
+  if (success) {
+    res.json({ success: true, message: "Link updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
+app.post("/api/links/risk-report", (req, res) => {
+  const { focusAreaName, eventTitle, url } = req.body;
+  if (!focusAreaName || !eventTitle) return res.status(400).json({ error: "Missing identifiers" });
+  
+  const success = updateRiskReportEventUrl(focusAreaName, eventTitle, url);
+  if (success) {
+    res.json({ success: true, message: "Link updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
+app.post("/api/notes/risk-report", (req, res) => {
+  const { focusAreaName, note } = req.body;
+  if (!focusAreaName) return res.status(400).json({ error: "Missing focus area name" });
+  
+  const success = updateFocusAreaNote(focusAreaName, note);
+  if (success) {
+    res.json({ success: true, message: "Note updated" });
+  } else {
+    res.status(404).json({ error: "Focus area not found" });
+  }
+});
+
+app.post("/api/links/risk-report/custom", (req, res) => {
+  const { focusAreaName, links } = req.body;
+  if (!focusAreaName) return res.status(400).json({ error: "Missing focus area name" });
+  
+  const success = updateFocusAreaLinks(focusAreaName, links);
+  if (success) {
+    res.json({ success: true, message: "Links updated" });
+  } else {
+    res.status(404).json({ error: "Focus area not found" });
+  }
+});
+
+app.post("/api/notes/updates", (req, res) => {
+  const { id, note } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing ID" });
+  
+  const success = updateUpdateItemNote(id, note);
+  if (success) {
+    res.json({ success: true, message: "Note updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
+app.post("/api/links/updates/custom", (req, res) => {
+  const { id, links } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing ID" });
+  
+  const success = updateUpdateItemLinks(id, links);
+  if (success) {
+    res.json({ success: true, message: "Links updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
+app.post("/api/notes/knowledge-base", (req, res) => {
+  const { id, note } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing ID" });
+  
+  const success = updateKnowledgeItemNote(id, note);
+  if (success) {
+    res.json({ success: true, message: "Note updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
+app.post("/api/links/knowledge-base/custom", (req, res) => {
+  const { id, links } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing ID" });
+  
+  const success = updateKnowledgeItemLinks(id, links);
+  if (success) {
+    res.json({ success: true, message: "Links updated" });
+  } else {
+    res.status(404).json({ error: "Item not found" });
+  }
+});
+
 app.get("/api/knowledge-base", (req, res) => {
   // Sort by date descending
   const sorted = [...knowledgeBase].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

@@ -2,8 +2,65 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { cn } from '../lib/utils';
-import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye } from 'lucide-react';
+import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye, Activity, Search } from 'lucide-react';
 import { motion } from 'motion/react';
+
+const GlobalSearch = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [query, setQuery] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { t } = useLanguage();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+      setQuery('');
+    }
+  };
+
+  return (
+    <div 
+      className="absolute top-6 right-6 z-50 flex items-center justify-end"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => {
+        if (document.activeElement !== inputRef.current) {
+          setIsExpanded(false);
+        }
+      }}
+    >
+      <form 
+        onSubmit={handleSearch}
+        className={cn(
+          "flex items-center bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-700 rounded-full transition-all duration-300 overflow-hidden",
+          isExpanded ? "w-64 pl-4 pr-1" : "w-10 h-10 justify-center cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800"
+        )}
+      >
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t('Search Google...', '搜索 Google...')}
+          className={cn(
+            "bg-transparent border-none outline-none text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 w-full",
+            !isExpanded && "hidden"
+          )}
+          onBlur={() => setIsExpanded(false)}
+        />
+        <button 
+          type="submit"
+          className={cn(
+            "flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors",
+            isExpanded ? "w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" : "w-full h-full"
+          )}
+        >
+          <Search size={18} />
+        </button>
+      </form>
+    </div>
+  );
+};
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -158,7 +215,8 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
       </aside>
 
       {/* Main Content */}
-      <main ref={mainRef} className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-950">
+      <main ref={mainRef} className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-950 relative">
+        <GlobalSearch />
         <div className="p-6 md:p-10 max-w-7xl mx-auto">
           {children}
         </div>
@@ -166,3 +224,4 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
     </div>
   );
 };
+

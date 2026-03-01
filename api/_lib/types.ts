@@ -48,6 +48,11 @@ export interface FocusArea {
     title: LocalizedString;
     url?: string;
   }[];
+  note?: string;
+  customLinks?: {
+    name: string;
+    url: string;
+  }[];
 }
 
 export interface RiskReport {
@@ -59,4 +64,5 @@ export interface RiskReport {
     enforcement: StatItem;
   };
   focusAreas: FocusArea[];
+  archivedFocusAreas?: FocusArea[];
 }

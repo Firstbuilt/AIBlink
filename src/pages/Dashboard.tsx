@@ -1,20 +1,160 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { RiskReport } from '../types';
-import { Shield, TrendingUp, Activity, Scale, Gavel, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Shield, TrendingUp, Activity, Scale, Gavel, AlertCircle, CheckCircle2, StickyNote, Archive, ChevronDown, ChevronUp, Edit2, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip } from 'recharts';
+import { LinkManager as CustomLinkManager } from '../components/CustomLinkManager';
 
 interface DashboardProps {
   report: RiskReport | null;
   onNavigate: (tab: string) => void;
+  onUpdate?: () => void;
 }
 
-export const Dashboard = ({ report, onNavigate }: DashboardProps) => {
+const NoteSection = ({ areaName, initialNote, onSave }: { areaName: string, initialNote?: string, onSave: (note: string) => void }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [note, setNote] = useState(initialNote || "");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { t } = useLanguage();
+  const textRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [showExpandButton, setShowExpandButton] = useState(false);
+
+  useEffect(() => {
+    if (textRef.current) {
+      setShowExpandButton(textRef.current.scrollHeight > textRef.current.clientHeight);
+    }
+  }, [note, isEditing]);
+
+  useEffect(() => {
+    if (isEditing && textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+    }
+  }, [note, isEditing]);
+
+  const handleSave = () => {
+    onSave(note);
+    setIsEditing(false);
+  };
+
+  return (
+    <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/50">
+      {!isEditing && !note && (
+        <button 
+          onClick={() => setIsEditing(true)}
+          className="flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+        >
+          <StickyNote size={14} />
+          {t('Add Note', '添加备注')}
+        </button>
+      )}
+
+      {!isEditing && note && (
+        <div className="group relative bg-yellow-50 dark:bg-yellow-900/10 p-3 rounded-lg border border-yellow-100 dark:border-yellow-900/30">
+          <button 
+            onClick={() => setIsEditing(true)}
+            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-indigo-600 transition-all z-10"
+            title={t('Edit Note', '编辑备注')}
+          >
+            <Edit2 size={12} />
+          </button>
+          
+          <div 
+            ref={textRef}
+            className={cn("text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap transition-all pr-6", !isExpanded && "line-clamp-3")}
+          >
+            {note}
+          </div>
+          
+          {showExpandButton && (
+            <div className="flex justify-start items-center mt-2">
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-[10px] font-medium text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 flex items-center gap-1"
+              >
+                {isExpanded ? (
+                  <>
+                    {t('Show Less', '收起')} <ChevronUp size={10} />
+                  </>
+                ) : (
+                  <>
+                    {t('Show More', '展开')} <ChevronDown size={10} />
+                  </>
+                )}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {isEditing && (
+        <div className="space-y-2">
+          <textarea
+            ref={textareaRef}
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            className="w-full text-sm p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all resize-none overflow-hidden"
+            rows={3}
+            placeholder={t('Add your notes here...', '在此添加备注...')}
+          />
+          <div className="flex justify-end gap-2">
+            <button 
+              onClick={() => setIsEditing(false)}
+              className="text-xs px-3 py-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+            >
+              {t('Cancel', '取消')}
+            </button>
+            <button 
+              onClick={handleSave}
+              className="text-xs px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+            >
+              {t('Save Note', '保存备注')}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const Dashboard = ({ report, onNavigate, onUpdate }: DashboardProps) => {
   const { language, t } = useLanguage();
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
   if (!report) return <div className="animate-pulse h-96 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>;
+
+  const handleSaveNote = async (focusAreaName: string, note: string) => {
+    try {
+      const response = await fetch('/api/notes/risk-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ focusAreaName, note })
+      });
+      if (response.ok && onUpdate) {
+        onUpdate();
+      }
+    } catch (error) {
+      console.error("Failed to save note", error);
+    }
+  };
+
+  const handleSaveLinks = async (focusAreaName: string, links: { name: string; url: string }[]) => {
+    try {
+      const response = await fetch('/api/links/risk-report/custom', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ focusAreaName, links })
+      });
+      if (response.ok && onUpdate) {
+        onUpdate();
+      }
+    } catch (error) {
+      console.error("Failed to save links", error);
+    }
+  };
 
   const getScoreStyles = (score: string) => {
     switch (score.toLowerCase()) {
@@ -289,25 +429,151 @@ export const Dashboard = ({ report, onNavigate }: DashboardProps) => {
                       {language === 'en' ? area.summary.en : area.summary.cn}
                     </p>
                     {/* Related Events */}
-                    {area.relatedEvents && area.relatedEvents.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                         {area.relatedEvents.map((event, eIdx) => (
-                           <a 
-                             key={eIdx}
-                             href={event.url}
-                             target="_blank"
-                             rel="noopener noreferrer"
-                             className="flex items-center gap-1.5 text-[10px] font-medium text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 px-2.5 py-1 rounded-full transition-colors"
-                           >
-                             <AlertCircle size={10} />
-                             {language === 'en' ? event.title.en : event.title.cn}
-                           </a>
+                    <div className="flex flex-wrap gap-2 mt-3 items-center">
+                         {area.relatedEvents?.map((event, eIdx) => (
+                           <div key={`event-${eIdx}`} className="flex items-center gap-1 bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 px-2 py-1 rounded-full">
+                             <a 
+                               href={event.url}
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               className="flex items-center gap-1.5 text-[10px] font-medium text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 transition-colors"
+                             >
+                               <AlertCircle size={10} />
+                               {language === 'en' ? event.title.en : event.title.cn}
+                             </a>
+                           </div>
                          ))}
-                      </div>
-                    )}
+                         
+                         {area.customLinks?.map((link, lIdx) => (
+                            <div key={`custom-${lIdx}`} className="relative group flex items-center gap-1 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 px-2 py-1 rounded-full">
+                              <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline truncate max-w-[150px]">
+                                {link.name}
+                              </a>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  const newLinks = [...(area.customLinks || [])];
+                                  newLinks.splice(lIdx, 1);
+                                  handleSaveLinks(area.name.en, newLinks);
+                                }}
+                                className="absolute -top-1.5 -right-1.5 hidden group-hover:flex bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-full p-0.5 w-4 h-4 items-center justify-center hover:bg-rose-500 hover:text-white transition-colors shadow-sm z-10"
+                                title={t('Remove Link', '删除链接')}
+                              >
+                                <X size={10} />
+                              </button>
+                            </div>
+                         ))}
+
+                         <CustomLinkManager 
+                           links={area.customLinks || []} 
+                           onSave={(links) => handleSaveLinks(area.name.en, links)} 
+                         />
+                    </div>
+                    
+                    <NoteSection 
+                      areaName={area.name.en} 
+                      initialNote={area.note} 
+                      onSave={(note) => handleSaveNote(area.name.en, note)} 
+                    />
                   </div>
                 </motion.div>
               ))}
+
+              {/* Archive Section */}
+              {report.archivedFocusAreas && report.archivedFocusAreas.length > 0 && (
+                <div className="mt-8">
+                  <button 
+                    onClick={() => setIsArchiveOpen(!isArchiveOpen)}
+                    className="flex items-center gap-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors w-full py-4 border-t border-slate-200 dark:border-slate-800"
+                  >
+                    <Archive size={18} />
+                    <span className="font-semibold text-sm">{t('Archived Areas', '归档领域')} ({report.archivedFocusAreas.length})</span>
+                    {isArchiveOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+                  
+                  <AnimatePresence>
+                    {isArchiveOpen && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="grid grid-cols-1 gap-4 mt-2 opacity-75 grayscale hover:grayscale-0 transition-all duration-500">
+                          {report.archivedFocusAreas.map((area, index) => (
+                            <div
+                              key={`archive-${index}`}
+                              className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-start gap-5"
+                            >
+                              <div className="flex-shrink-0 flex justify-between md:block md:w-48">
+                                <h5 className="font-bold text-slate-700 dark:text-slate-300 text-base">
+                                  {language === 'en' ? area.name.en : area.name.cn}
+                                </h5>
+                                {area.citation && (
+                                  <span className="inline-block mt-2 text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700">
+                                    {area.citation}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex-1 border-l-2 border-slate-200 dark:border-slate-800 pl-5">
+                                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+                                  {language === 'en' ? area.summary.en : area.summary.cn}
+                                </p>
+                                <div className="flex flex-wrap gap-2 mt-3 items-center">
+                                     {area.relatedEvents?.map((event, eIdx) => (
+                                       <div key={`event-${eIdx}`} className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-1 rounded-full">
+                                         <a 
+                                           href={event.url}
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           className="flex items-center gap-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+                                         >
+                                           <AlertCircle size={10} />
+                                           {language === 'en' ? event.title.en : event.title.cn}
+                                         </a>
+                                       </div>
+                                     ))}
+
+                                     {area.customLinks?.map((link, lIdx) => (
+                                        <div key={`custom-${lIdx}`} className="relative group flex items-center gap-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-1 rounded-full">
+                                          <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-slate-500 dark:text-slate-400 hover:underline truncate max-w-[150px]">
+                                            {link.name}
+                                          </a>
+                                          <button
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              const newLinks = [...(area.customLinks || [])];
+                                              newLinks.splice(lIdx, 1);
+                                              handleSaveLinks(area.name.en, newLinks);
+                                            }}
+                                            className="absolute -top-1.5 -right-1.5 hidden group-hover:flex bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-full p-0.5 w-4 h-4 items-center justify-center hover:bg-rose-500 hover:text-white transition-colors shadow-sm z-10"
+                                            title={t('Remove Link', '删除链接')}
+                                          >
+                                            <X size={10} />
+                                          </button>
+                                        </div>
+                                     ))}
+
+                                     <CustomLinkManager 
+                                       links={area.customLinks || []} 
+                                       onSave={(links) => handleSaveLinks(area.name.en, links)} 
+                                     />
+                                </div>
+                                
+                                <NoteSection 
+                                  areaName={area.name.en} 
+                                  initialNote={area.note} 
+                                  onSave={(note) => handleSaveNote(area.name.en, note)} 
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
           </div>
         </div>

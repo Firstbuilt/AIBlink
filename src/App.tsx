@@ -102,9 +102,9 @@ function AppContent() {
         onRefresh={handleRefresh}
         isRefreshing={isRefreshing}
       >
-        {activeTab === 'dashboard' && <Dashboard report={report} onNavigate={setActiveTab} />}
-        {activeTab === 'updates' && <Updates updates={updates} />}
-        {activeTab === 'knowledge' && <KnowledgeBase items={knowledgeItems} />}
+        {activeTab === 'dashboard' && <Dashboard report={report} onNavigate={setActiveTab} onUpdate={fetchData} />}
+        {activeTab === 'updates' && <Updates updates={updates} onUpdate={fetchData} />}
+        {activeTab === 'knowledge' && <KnowledgeBase items={knowledgeItems} onUpdate={fetchData} />}
       </Layout>
       <Toast 
         message={toast.message}
