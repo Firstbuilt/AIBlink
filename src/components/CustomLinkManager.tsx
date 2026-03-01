@@ -41,7 +41,7 @@ export const LinkManager = ({ links, onSave }: LinkManagerProps) => {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-8 z-50 w-72 bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 p-4">
+        <div className="absolute left-0 bottom-full mb-2 z-50 w-72 bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 p-4">
           <div className="flex justify-between items-center mb-3">
             <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{t('Manage Links', '管理链接')}</h4>
             <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-slate-600">
