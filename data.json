@@ -368,7 +368,7 @@
     }
   ],
   "riskReport": {
-    "lastUpdated": "2026-03-02",
+    "lastUpdated": "2026-03-02T11:20:00",
     "score": "Medium",
     "summary": {
       "en": [
@@ -420,13 +420,8 @@
             "url": "https://www.google.com/search?q=Meta+fined+1.2+billion+euro+data+transfer+EU+US"
           }
         ],
-        "customLinks": [
-          {
-            "name": "url",
-            "url": "teststest"
-          }
-        ],
-        "note": "Testtest"
+        "customLinks": [],
+        "note": "Testtest1122"
       },
       {
         "name": {
