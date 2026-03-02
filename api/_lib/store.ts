@@ -1,8 +1,11 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { KnowledgeItem, UpdateItem, RiskReport } from './types.js';
 
-const DATA_FILE = path.join(process.cwd(), 'data.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_FILE = path.resolve(__dirname, '../../data.json');
 
 // Initial default data
 const defaultKnowledgeBase: KnowledgeItem[] = [

@@ -16,6 +16,8 @@ export interface KnowledgeItem {
   date: string;
   summary: LocalizedString;
   url: string;
+  note?: string;
+  customLinks?: { name: string; url: string }[];
 }
 
 export interface Party {
@@ -32,6 +34,8 @@ export interface UpdateItem {
   analysis: LocalizedString;
   parties?: Party[];
   url?: string; // Added URL
+  note?: string;
+  customLinks?: { name: string; url: string }[];
 }
 
 export interface StatItem {

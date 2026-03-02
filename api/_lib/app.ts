@@ -140,13 +140,21 @@ app.get("/api/report", (req, res) => {
   res.json(riskReport);
 });
 
+app.get("/api/data", (req, res) => {
+  res.json({
+    knowledgeBase,
+    updates,
+    riskReport
+  });
+});
+
 app.post("/api/refresh", async (req, res) => {
   try {
-    // Prioritize API_KEY as it is often injected by the platform
-    let apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    // Prioritize GEMINI_API_KEY as it is the standard for this platform
+    let apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY || process.env.GOOGLE_API_KEY;
     
     if (!apiKey) {
-      console.error("API Key is missing. Checked API_KEY, GEMINI_API_KEY, and GOOGLE_API_KEY.");
+      console.error("API Key is missing. Checked GEMINI_API_KEY, API_KEY, and GOOGLE_API_KEY.");
       return res.status(500).json({ error: "Server configuration error: Missing API Key" });
     }
 
@@ -172,8 +180,8 @@ app.post("/api/refresh", async (req, res) => {
     const ai = new GoogleGenAI({ apiKey: apiKey });
 
     // 1. Search for latest news
-    // Switch to 1.5-flash as it is most stable for general keys
-    const model = "gemini-1.5-flash"; 
+    // Use the latest flash model
+    const model = "gemini-3-flash-preview"; 
     // Simplified prompt for speed
     const searchPrompt = "Latest EU AI regulation news and enforcement actions (last 3 months). Focus on major fines or new laws.";
     
@@ -252,7 +260,7 @@ app.post("/api/refresh", async (req, res) => {
 
       console.log("Generating content...");
       const generatedData = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
+        model: "gemini-3-flash-preview",
         contents: [
           { role: "user", parts: [{ text: searchPrompt }] },
           { role: "model", parts: [{ text: searchResponse.text }] }, 
