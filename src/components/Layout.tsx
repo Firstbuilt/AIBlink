@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { cn } from '../lib/utils';
-import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye, Activity, Search } from 'lucide-react';
+import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye, Activity, Search, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 
 const GlobalSearch = () => {
@@ -195,6 +195,19 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
             title={t('Toggle Theme', '切换主题')}
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+
+          {/* Download Button */}
+          <button
+            onClick={() => window.open('/api/download', '_blank')}
+            className={cn(
+              "w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-700 text-slate-300",
+              isCollapsed && "px-0"
+            )}
+            title={t('Download Data', '下载数据')}
+          >
+            <Download size={16} />
+            {!isCollapsed && <span>{t('Download', '下载数据')}</span>}
           </button>
 
           {/* Refresh Button */}

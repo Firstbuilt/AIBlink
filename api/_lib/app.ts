@@ -148,6 +148,17 @@ app.get("/api/data", (req, res) => {
   });
 });
 
+app.get("/api/download", (req, res) => {
+  const data = {
+    knowledgeBase,
+    updates,
+    riskReport
+  };
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', 'attachment; filename=data.json');
+  res.json(data);
+});
+
 app.post("/api/refresh", async (req, res) => {
   try {
     // Prioritize GEMINI_API_KEY as it is the standard for this platform
