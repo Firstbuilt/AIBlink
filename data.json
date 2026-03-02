@@ -392,7 +392,7 @@
     }
   ],
   "riskReport": {
-    "lastUpdated": "2026-03-02T06:31:45-08:00",
+    "lastUpdated": "2026-03-02T07:39:16-08:00",
     "score": "Medium",
     "summary": {
       "en": [
@@ -450,7 +450,7 @@
             "url": "https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en"
           }
         ],
-        "note": "test"
+        "note": "test是否"
       },
       {
         "name": {
