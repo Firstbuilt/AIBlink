@@ -22,7 +22,7 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
       en: "The comprehensive AI law entered into force in August 2024. Most rules for high-risk AI systems apply from August 2026 (24 months post-entry).",
       cn: "这部全面的人工智能法律于2024年8月生效。大多数针对高风险AI系统的规则将从2026年8月起适用（生效后24个月）。"
     },
-    url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
+    url: "https://www.google.com/search?q=EU+AI+Act+Legislation+Text"
   },
   {
     id: "kb-2",
@@ -40,7 +40,7 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
       en: "The foundational privacy law. Recent enforcement focuses on automated decision-making and data scraping for AI training.",
       cn: "基础隐私法律。近期的执法重点在于自动化决策和用于AI训练的数据抓取。"
     },
-    url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    url: "https://www.google.com/search?q=GDPR+Official+Text"
   },
   {
     id: "kb-5",
@@ -58,7 +58,7 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
       en: "Code of practice for providers of general-purpose AI models, detailing transparency and copyright compliance.",
       cn: "针对通用人工智能模型提供者的行为准则，详细说明了透明度和版权合规性。"
     },
-    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
+    url: "https://www.google.com/search?q=EU+AI+Office+GPAI+Code+of+Practice"
   },
   {
     id: "kb-6",
@@ -76,7 +76,7 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
       en: "Recommendations on 'legitimate interest' as a legal basis for training AI models on personal data.",
       cn: "关于将'合法利益'作为在个人数据上训练AI模型的法律依据的建议。"
     },
-    url: "https://www.cnil.fr/en/artificial-intelligence"
+    url: "https://www.google.com/search?q=CNIL+AI+Development+Guidelines"
   },
   {
     id: "kb-7",
@@ -94,7 +94,7 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
       en: "Standards for risk management and data governance in high-risk AI systems.",
       cn: "高风险AI系统风险管理和数据治理的标准。"
     },
-    url: "https://www.cencenelec.eu/areas-of-work/cen-cenelec-topics/artificial-intelligence/"
+    url: "https://www.google.com/search?q=CEN-CENELEC+AI+Harmonised+Standards"
   },
   {
     id: "kb-8",
@@ -112,7 +112,7 @@ const defaultKnowledgeBase: KnowledgeItem[] = [
       en: "German Federal Commissioner's stance on the 'right to be forgotten' in the context of unlearning for LLMs.",
       cn: "德国联邦专员关于大型语言模型（LLM）背景下'被遗忘权'（遗忘学习）的立场。"
     },
-    url: "https://www.bfdi.bund.de/DE/Fachthemen/Inhalte/Technik/Kuenstliche-Intelligenz/Kuenstliche-Intelligenz_node.html"
+    url: "https://www.google.com/search?q=BfDI+Position+Paper+LLMs"
   }
 ];
 
@@ -139,7 +139,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Regulator"
       }
     ],
-    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-act"
+    url: "https://www.google.com/search?q=EU+AI+Act+High+Risk+AI+Compliance+Deadline+August+2026"
   },
   {
     id: "up-10",
@@ -163,7 +163,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Regulator"
       }
     ],
-    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
+    url: "https://www.google.com/search?q=EU+AI+Office+Guidelines+on+GPAI+Transparency"
   },
   {
     id: "up-9",
@@ -187,7 +187,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Regulator"
       }
     ],
-    url: "https://digital-strategy.ec.europa.eu/en/policies/ai-act"
+    url: "https://www.google.com/search?q=EU+High-Risk+AI+Systems+Registration+Database"
   },
   {
     id: "up-8",
@@ -215,7 +215,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Company"
       }
     ],
-    url: "https://blog.google/technology/ai/google-gemini-ai/"
+    url: "https://www.google.com/search?q=Irish+DPC+Inquiry+Google+AI+Personal+Data"
   },
   {
     id: "up-3",
@@ -243,7 +243,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Company"
       }
     ],
-    url: "https://www.cnil.fr/en/clearview-ai-fined-20-million-euros-cnil"
+    url: "https://www.google.com/search?q=CNIL+fines+Clearview+AI+20+million+biometric+data"
   },
   {
     id: "up-4",
@@ -271,7 +271,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Company"
       }
     ],
-    url: "https://about.fb.com/news/2024/06/pausing-ai-training-in-europe/"
+    url: "https://www.google.com/search?q=Meta+Pauses+AI+Training+in+EU+EEA"
   },
   {
     id: "up-5",
@@ -295,7 +295,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Company"
       }
     ],
-    url: "https://www.deepseek.com/"
+    url: "https://www.google.com/search?q=DeepSeek+Privacy+Policy+Update+Chinese+AI"
   },
   {
     id: "up-6",
@@ -323,7 +323,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Company"
       }
     ],
-    url: "https://openai.com/index/openai-and-italy-garante/"
+    url: "https://www.google.com/search?q=OpenAI+Responds+to+Italian+Garante+Privacy+Controls"
   },
   {
     id: "up-7",
@@ -347,7 +347,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Company"
       }
     ],
-    url: "https://mistral.ai/news/mistral-large/"
+    url: "https://www.google.com/search?q=Mistral+Large+Release+European+AI"
   },
   {
     id: "up-1",
@@ -371,7 +371,7 @@ const defaultUpdates: UpdateItem[] = [
         type: "Regulator"
       }
     ],
-    url: "https://www.consilium.europa.eu/en/press/press-releases/2024/05/21/artificial-intelligence-ai-act-council-gives-final-green-light-to-the-first-worldwide-rules-on-ai/"
+    url: "https://www.google.com/search?q=Council+of+EU+approves+AI+Act+May+2024"
   }
 ];
 

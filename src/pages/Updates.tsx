@@ -206,7 +206,7 @@ export const Updates = ({ updates, onUpdate }: UpdatesProps) => {
             {/* Top Right Link Icon */}
             <div className="absolute top-4 right-4 flex items-center gap-2 z-20">
               <a 
-                href={`https://www.google.com/search?q=${encodeURIComponent((language === 'en' ? item.title.en : item.title.cn) + " " + item.source)}`}
+                href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"

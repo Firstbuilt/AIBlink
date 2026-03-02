@@ -132,7 +132,7 @@
           "type": "Regulator"
         }
       ],
-      "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-act"
+      "url": "https://www.google.com/search?q=EU+AI+Act+High+Risk+AI+Compliance+Deadline+August+2026"
     },
     {
       "id": "up-10",
@@ -156,7 +156,7 @@
           "type": "Regulator"
         }
       ],
-      "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
+      "url": "https://www.google.com/search?q=EU+AI+Office+Guidelines+on+GPAI+Transparency"
     },
     {
       "id": "up-9",
@@ -180,7 +180,7 @@
           "type": "Regulator"
         }
       ],
-      "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-act"
+      "url": "https://www.google.com/search?q=EU+High-Risk+AI+Systems+Registration+Database"
     },
     {
       "id": "up-8",
@@ -208,7 +208,7 @@
           "type": "Company"
         }
       ],
-      "url": "https://blog.google/technology/ai/google-gemini-ai/"
+      "url": "https://www.google.com/search?q=Irish+DPC+Inquiry+Google+AI+Personal+Data"
     },
     {
       "id": "up-3",
@@ -236,7 +236,7 @@
           "type": "Company"
         }
       ],
-      "url": "https://www.cnil.fr/en/clearview-ai-fined-20-million-euros-cnil"
+      "url": "https://www.google.com/search?q=CNIL+fines+Clearview+AI+20+million+biometric+data"
     },
     {
       "id": "up-4",
@@ -264,7 +264,7 @@
           "type": "Company"
         }
       ],
-      "url": "https://about.fb.com/news/2024/06/pausing-ai-training-in-europe/"
+      "url": "https://www.google.com/search?q=Meta+Pauses+AI+Training+in+EU+EEA"
     },
     {
       "id": "up-5",
@@ -288,7 +288,7 @@
           "type": "Company"
         }
       ],
-      "url": "https://www.deepseek.com/"
+      "url": "https://www.google.com/search?q=DeepSeek+Privacy+Policy+Update+Chinese+AI"
     },
     {
       "id": "up-6",
@@ -316,7 +316,7 @@
           "type": "Company"
         }
       ],
-      "url": "https://openai.com/index/openai-and-italy-garante/"
+      "url": "https://www.google.com/search?q=OpenAI+Responds+to+Italian+Garante+Privacy+Controls"
     },
     {
       "id": "up-7",
@@ -340,7 +340,7 @@
           "type": "Company"
         }
       ],
-      "url": "https://mistral.ai/news/mistral-large/"
+      "url": "https://www.google.com/search?q=Mistral+Large+Release+European+AI"
     },
     {
       "id": "up-1",
@@ -364,22 +364,22 @@
           "type": "Regulator"
         }
       ],
-      "url": "https://www.consilium.europa.eu/en/press/press-releases/2024/05/21/artificial-intelligence-ai-act-council-gives-final-green-light-to-the-first-worldwide-rules-on-ai/"
+      "url": "https://www.google.com/search?q=Council+of+EU+approves+AI+Act+May+2024"
     }
   ],
   "riskReport": {
-    "lastUpdated": "2026-03-01",
+    "lastUpdated": "2026-03-02",
     "score": "Medium",
     "summary": {
       "en": [
-        "High-Risk AI Systems deadline (Aug 2026) is approaching. Conformity assessments must be initiated immediately.",
-        "GPAI transparency obligations are fully active. Ensure technical documentation is up to date with the latest Code of Practice.",
-        "Cross-border data transfers remain a high-risk area. Verify SCCs and supplementary measures for all non-EU data flows."
+        "The EU AI Office has released new transparency guidelines. We must update our technical documentation by Q3 2026 to include detailed model training data sources.",
+        "Recent fines against RetailCo for emotion recognition show that using AI to analyze customer sentiment in stores is now strictly prohibited.",
+        "With the new age verification rules enforced on OpenAI, we need to verify if our user sign-up flow meets the 'strict age-gating' standard."
       ],
       "cn": [
-        "高风险AI系统截止日期（2026年8月）临近。必须立即启动符合性评估。",
-        "通用人工智能（GPAI）透明度义务已全面生效。确保技术文档符合最新的行为准则。",
-        "跨境数据传输仍是高风险领域。核实所有非欧盟数据流的SCCs和补充措施。"
+        "欧盟AI办公室发布了新的透明度指南。我们必须在2026年第三季度前更新技术文档，详细说明模型训练数据的来源。",
+        "近期RetailCo因情绪识别被罚款，这表明在商店中使用AI分析客户情绪现在是被严格禁止的。",
+        "随着OpenAI被强制执行新的年龄验证规则，我们需要核实我们的用户注册流程是否达到了'严格年龄门槛'的标准。"
       ]
     },
     "stats": {
@@ -396,7 +396,7 @@
           "en": "Enforcement Actions",
           "cn": "执法行动"
         },
-        "count": 10,
+        "count": 11,
         "trend": "up"
       }
     },
@@ -501,6 +501,7 @@
           }
         ]
       }
-    ]
+    ],
+    "archivedFocusAreas": []
   }
 }

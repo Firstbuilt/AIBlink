@@ -210,8 +210,10 @@ app.post("/api/refresh", async (req, res) => {
         - RULE 3: AVOID JARGON. Use terms PMs understand (e.g., "user consent", "feature rollback", "documentation update") rather than legal citations alone.
 
         CRITICAL INSTRUCTION FOR LINKS:
-        - All URLs, especially in 'relatedEvents', MUST be specific deep links to the actual article, press release, or document.
-        - DO NOT use generic homepages (e.g., "https://www.reuters.com/" is BAD; "https://www.reuters.com/technology/article-123" is GOOD).
+        - All URLs, especially in 'relatedEvents' and 'newUpdates', MUST be a Google Search URL.
+        - Format: "https://www.google.com/search?q=" + [Keywords from the title and context].
+        - Example: "https://www.google.com/search?q=EU+AI+Act+Compliance+Deadline"
+        - DO NOT use direct deep links to articles as they may break.
         
         Based on the search results:
         1. Generate new update items for any recent events (last 3 months).
@@ -286,7 +288,7 @@ app.post("/api/refresh", async (req, res) => {
               cn: "此次更新明确了2026年第三季度合规所需的文件。" 
             },
             parties: [{ name: "EU AI Office", type: "Regulator" }],
-            url: "https://digital-strategy.ec.europa.eu/en/policies/ai-office"
+            url: "https://www.google.com/search?q=EU+AI+Office+New+Compliance+Guidelines+2026"
           }
         ],
         riskReport: {
