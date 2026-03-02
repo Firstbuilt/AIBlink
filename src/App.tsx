@@ -11,6 +11,7 @@ import { Toast, ToastType } from './components/Toast';
 function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   
   const [knowledgeItems, setKnowledgeItems] = useState<KnowledgeItem[]>([]);
   const [updates, setUpdates] = useState<UpdateItem[]>([]);
@@ -94,6 +95,26 @@ function AppContent() {
     }
   };
 
+  const handleSync = async () => {
+    setIsSyncing(true);
+    try {
+      const res = await fetch('/api/github-sync', { method: 'POST' });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.details || data.error || "Sync failed");
+      }
+
+      showToast(language === 'en' ? "Synced to GitHub successfully" : "成功同步到 GitHub", 'success');
+    } catch (error: any) {
+      console.error("Sync failed", error);
+      const msg = error.message || (language === 'en' ? "Failed to sync to GitHub" : "同步到 GitHub 失败");
+      showToast(msg, 'error');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   return (
     <>
       <Layout 
@@ -101,6 +122,8 @@ function AppContent() {
         onTabChange={setActiveTab}
         onRefresh={handleRefresh}
         isRefreshing={isRefreshing}
+        onSync={handleSync}
+        isSyncing={isSyncing}
       >
         {activeTab === 'dashboard' && <Dashboard report={report} onNavigate={setActiveTab} onUpdate={fetchData} />}
         {activeTab === 'updates' && <Updates updates={updates} onUpdate={fetchData} />}

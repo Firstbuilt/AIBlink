@@ -140,6 +140,79 @@ app.get("/api/report", (req, res) => {
   res.json(riskReport);
 });
 
+app.post("/api/github-sync", async (req, res) => {
+  const token = process.env.GITHUB_TOKEN;
+  const owner = process.env.GITHUB_OWNER;
+  const repo = process.env.GITHUB_REPO;
+  const branch = process.env.GITHUB_BRANCH || "main";
+  const path = "data.json";
+
+  if (!token || !owner || !repo) {
+    return res.status(500).json({ 
+      error: "GitHub configuration missing", 
+      details: "Please set GITHUB_TOKEN, GITHUB_OWNER, and GITHUB_REPO in environment variables." 
+    });
+  }
+
+  try {
+    // 1. Get current file SHA
+    const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
+    const getRes = await fetch(getUrl, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github.v3+json"
+      }
+    });
+
+    let sha: string | undefined;
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    } else if (getRes.status !== 404) {
+      const errorText = await getRes.text();
+      throw new Error(`Failed to fetch file info: ${getRes.status} ${errorText}`);
+    }
+
+    // 2. Prepare content
+    const content = JSON.stringify({
+      knowledgeBase,
+      updates,
+      riskReport
+    }, null, 2);
+    
+    const base64Content = Buffer.from(content).toString('base64');
+
+    // 3. Update file
+    const putUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const putRes = await fetch(putUrl, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "Update data.json via AI Studio",
+        content: base64Content,
+        sha: sha,
+        branch: branch
+      })
+    });
+
+    if (!putRes.ok) {
+      const errorText = await putRes.text();
+      throw new Error(`Failed to update file: ${putRes.status} ${errorText}`);
+    }
+
+    const result = await putRes.json();
+    res.json({ success: true, commit: result.commit.sha });
+
+  } catch (error: any) {
+    console.error("GitHub sync failed:", error);
+    res.status(500).json({ error: "GitHub sync failed", details: error.message });
+  }
+});
+
 app.get("/api/data", (req, res) => {
   res.json({
     knowledgeBase,
