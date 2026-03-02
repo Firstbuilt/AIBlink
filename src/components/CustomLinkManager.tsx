@@ -26,8 +26,10 @@ export const LinkManager = ({ links, onSave }: LinkManagerProps) => {
   };
 
   const handleDelete = (index: number) => {
-    const updated = links.filter((_, i) => i !== index);
-    onSave(updated);
+    if (window.confirm("你的删除操作将会实时生效，其他用户能同步看到该变更，请谨慎操作！")) {
+      const updated = links.filter((_, i) => i !== index);
+      onSave(updated);
+    }
   };
 
   return (
@@ -47,6 +49,10 @@ export const LinkManager = ({ links, onSave }: LinkManagerProps) => {
             <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-slate-600">
               <X size={14} />
             </button>
+          </div>
+
+          <div className="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 p-2 rounded text-xs mb-3 border border-amber-100 dark:border-amber-900/30">
+            你所做的任何变更将会实时生效，其他用户能同步看到该变更，请谨慎操作！
           </div>
 
           <div className="space-y-2 mb-4 max-h-40 overflow-y-auto">

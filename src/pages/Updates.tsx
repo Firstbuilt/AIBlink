@@ -39,11 +39,17 @@ const NoteSection = ({ areaName, initialNote, onSave }: { areaName: string, init
     setIsEditing(false);
   };
 
+  const handleEditClick = () => {
+    if (window.confirm("你所做的任何变更将会在保存后生效，其他用户能同步看到该变更，请谨慎操作！")) {
+      setIsEditing(true);
+    }
+  };
+
   return (
     <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/50">
       {!isEditing && !note && (
         <button 
-          onClick={() => setIsEditing(true)}
+          onClick={handleEditClick}
           className="flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
           <StickyNote size={14} />
@@ -54,7 +60,7 @@ const NoteSection = ({ areaName, initialNote, onSave }: { areaName: string, init
       {!isEditing && note && (
         <div className="group relative bg-yellow-50 dark:bg-yellow-900/10 p-3 rounded-lg border border-yellow-100 dark:border-yellow-900/30">
           <button 
-            onClick={() => setIsEditing(true)}
+            onClick={handleEditClick}
             className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-indigo-600 transition-all z-10"
             title={t('Edit Note', '编辑备注')}
           >
@@ -273,9 +279,11 @@ export const Updates = ({ updates, onUpdate }: UpdatesProps) => {
                             <button
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    const newLinks = [...(item.customLinks || [])];
-                                    newLinks.splice(lIdx, 1);
-                                    handleSaveCustomLinks(item.id, newLinks);
+                                    if (window.confirm("你的删除操作将会实时生效，其他用户能同步看到该变更，请谨慎操作！")) {
+                                        const newLinks = [...(item.customLinks || [])];
+                                        newLinks.splice(lIdx, 1);
+                                        handleSaveCustomLinks(item.id, newLinks);
+                                    }
                                 }}
                                 className="absolute -top-1.5 -right-1.5 hidden group-hover:flex bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 rounded-full p-0.5 w-4 h-4 items-center justify-center hover:bg-rose-500 hover:text-white transition-colors shadow-sm z-10"
                                 title={t('Remove Link', '删除链接')}
