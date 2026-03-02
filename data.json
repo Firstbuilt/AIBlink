@@ -111,6 +111,30 @@
   ],
   "updates": [
     {
+      "id": "sim-1772458749404",
+      "date": "2026-03-02",
+      "title": {
+        "en": "New AI Compliance Guidelines Released (Simulated)",
+        "cn": "新AI合规指南发布（模拟）"
+      },
+      "source": "EU AI Office",
+      "content": {
+        "en": "The EU AI Office has released updated guidelines for general-purpose AI models, emphasizing stricter transparency requirements.",
+        "cn": "欧盟AI办公室发布了通用人工智能模型的更新指南，强调了更严格的透明度要求。"
+      },
+      "analysis": {
+        "en": "This update clarifies the documentation needed for compliance by Q3 2026.",
+        "cn": "此次更新明确了2026年第三季度合规所需的文件。"
+      },
+      "parties": [
+        {
+          "name": "EU AI Office",
+          "type": "Regulator"
+        }
+      ],
+      "url": "https://www.google.com/search?q=EU+AI+Office+New+Compliance+Guidelines+2026"
+    },
+    {
       "id": "up-2026-1",
       "date": "2026-02-10",
       "title": {
@@ -368,7 +392,7 @@
     }
   ],
   "riskReport": {
-    "lastUpdated": "2026-03-02T11:20:00",
+    "lastUpdated": "2026-03-02T06:31:45-08:00",
     "score": "Medium",
     "summary": {
       "en": [
@@ -396,7 +420,7 @@
           "en": "Enforcement Actions",
           "cn": "执法行动"
         },
-        "count": 10,
+        "count": 11,
         "trend": "up"
       }
     },
@@ -420,8 +444,13 @@
             "url": "https://www.google.com/search?q=Meta+fined+1.2+billion+euro+data+transfer+EU+US"
           }
         ],
-        "customLinks": [],
-        "note": "Testtest1122"
+        "customLinks": [
+          {
+            "name": "EDPB Decision",
+            "url": "https://www.edpb.europa.eu/news/news/2023/12-billion-euro-fine-facebook-result-edpb-binding-decision_en"
+          }
+        ],
+        "note": "test"
       },
       {
         "name": {
