@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { cn } from '../lib/utils';
-import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye, Activity, Search, Github } from 'lucide-react';
+import { LayoutDashboard, Book, Radio, RefreshCw, ChevronLeft, ChevronRight, Moon, Sun, Eye, Activity, Search } from 'lucide-react';
 import { motion } from 'motion/react';
 
 const GlobalSearch = () => {
@@ -68,11 +68,9 @@ interface LayoutProps {
   onTabChange: (tab: string) => void;
   onRefresh: () => void;
   isRefreshing: boolean;
-  onSync: () => void;
-  isSyncing: boolean;
 }
 
-export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshing, onSync, isSyncing }: LayoutProps) => {
+export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshing }: LayoutProps) => {
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -212,21 +210,6 @@ export const Layout = ({ children, activeTab, onTabChange, onRefresh, isRefreshi
           >
             <RefreshCw size={16} className={cn(isRefreshing && "animate-spin")} />
             {!isCollapsed && <span>{isRefreshing ? t('Updating...', '更新中...') : t('Refresh', '刷新')}</span>}
-          </button>
-
-          {/* GitHub Sync Button */}
-          <button
-            onClick={onSync}
-            disabled={isSyncing}
-            className={cn(
-              "w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-medium transition-colors text-slate-300 border border-slate-700",
-              isSyncing && "opacity-50 cursor-not-allowed",
-              isCollapsed && "px-0"
-            )}
-            title={t('Sync to GitHub', '同步到 GitHub')}
-          >
-            <Github size={16} className={cn(isSyncing && "animate-pulse")} />
-            {!isCollapsed && <span>{isSyncing ? t('Syncing...', '同步中...') : t('Sync', '同步')}</span>}
           </button>
         </div>
       </aside>
